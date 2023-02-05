@@ -1,0 +1,3 @@
+23 * 17
+Extra input that should
+be ignored.
