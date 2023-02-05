@@ -71,6 +71,7 @@ int main()
     operator = (char) skip_space();
   }
   print_value(left);
+  putchar('\n');
   return EXIT_SUCCESS;
 
 }

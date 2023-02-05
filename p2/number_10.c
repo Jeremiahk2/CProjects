@@ -39,7 +39,7 @@ long parse_value()
   }
   while (next >= '0' && next <= '9') {
     value = times(value, 10);
-    value = plus(value, (long) next);
+    value = plus(value, (long)next - 48);
     next = getchar();
   }
   ungetc( next, stdin );
@@ -61,7 +61,7 @@ void print_value( long val )
     }
     long digit = val % 10;
 
-    char newChar = (char) digit;
+    char newChar = (char) digit + 48;
 
     val = divide(val, 10);
     if (val != 0) {
