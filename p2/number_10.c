@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "number.h"
+#include "operation.h"
 
 /**
   @file number_10.c
@@ -29,12 +31,19 @@ long parse_value()
 {
   long value = 0;
   char next = getchar();
-
+  bool negative = false;
+  if (next == '-') {
+    negative = true;
+    next = getchar();
+  }
   while (next >= '0' && next <= '9') {
     value = times(value, 10);
     value = plus(value, (long) next);
     next = getchar();
-    ungetc( next, stdin );
+  }
+  ungetc( next, stdin );
+  if (negative) {
+    return times(value, -1);
   }
   return value;
 }

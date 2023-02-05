@@ -117,7 +117,7 @@ long exponential (long a, long b )
 long divide( long a, long b )
 {
   if (b == 0) {
-    exit(100);
+    exit(101);
   }
   if (a == LONG_MAX && b == -1) {
     exit(100);
