@@ -54,7 +54,34 @@ long minus( long a, long b )
 */
 long times( long a, long b ) 
 {
-
+  if ( a == 0 || b == 0 ) {
+    return 0;
+  }
+  if ( a > 0 && b > 0 ) {
+    long x = LONG_MAX / b;
+    if (a > x) {
+      exit(100);
+    }
+  }
+  if (a > 0 && b < 0 ) {
+    long x = LONG_MIN / b;
+    if ( a > x ) {
+      exit(100);
+    }
+  }
+  if ( a < 0 && b < 0 ) {
+    long x = LONG_MAX / b;
+    if ( a < x ) {
+      exit(100);
+    }
+  }
+  if ( a < 0 && b > 0 ) {
+    long x = LONG_MIN / b;
+    if ( a < x ) {
+      exit(100);
+    }
+  }
+  return a * b;
 }
 
 /**
@@ -65,7 +92,20 @@ long times( long a, long b )
 */
 long exponential (long a, long b )
 {
-
+  if (b < 0) {
+    exit(100);
+  }
+  if ( a == 0 && b != 0 ) {
+    return 0;
+  }
+  if (b == 0) {
+    return 1;
+  }
+  long result = a;
+  for (int i = 0; i < b - 1; i++) {
+    result = times(result, a);
+  }
+  return result;
 }
 
 /**
@@ -76,5 +116,11 @@ long exponential (long a, long b )
 */
 long divide( long a, long b )
 {
-
+  if (b == 0) {
+    exit(100);
+  }
+  if (a == LONG_MAX && b == -1) {
+    exit(100);
+  }
+  return a / b;
 }
