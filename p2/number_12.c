@@ -18,13 +18,14 @@
 int skip_space()
 {
   bool charFound = false;
+  char current = EOF;
   while (!charFound) {
     char current = getchar();
-    if ( current =! ' ' ) {
+    if ( current != ' ' ) {
       charFound = true;
-      return (int) current;
     }
   }
+  return (int)current;
 }
 
 long parse_value()
@@ -45,9 +46,9 @@ void print_value( long val )
 {
   if (val == 0) {
     putchar('0');
-    break;
   }
-  if (val < 0) {
+  else {
+    if (val < 0) {
     putchar('-');
     times(val, -1);
   }
@@ -55,15 +56,16 @@ void print_value( long val )
 
   char newChar = (char) digit;
   if (digit == 10) {
-    newChar == 'X';
+    newChar = 'X';
   }
   else if (digit == 11) {
-    newChar == 'E';
+    newChar = 'E';
   }
 
   val = divide(val, 12);
   if (val != 0) {
-    putchar( print_value(val));
+    print_value(val);
   }
   putchar(newChar);
+  }
 }
