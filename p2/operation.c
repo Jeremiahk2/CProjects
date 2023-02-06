@@ -101,7 +101,7 @@ long times( long a, long b )
 long exponential (long a, long b )
 {
   if (b < 0) {
-    exit(100);
+    exit(103); //no tests for this?
   }
   if ( a == 0 && b != 0 ) {
     return 0;
