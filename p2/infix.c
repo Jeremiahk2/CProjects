@@ -40,8 +40,11 @@ static long parse_mul_div()
     if (next == '*') {
       left = times(current, left);
     }
-    if (next == '/') {
+    else if (next == '/') {
       left = divide(left, current);
+    }
+    else {
+      exit(102);
     }
     next = (char) skip_space();
     char trash = (char) skip_space();
@@ -66,8 +69,11 @@ int main()
     if (operator == '+') {
       left = plus(left, next);
     }
-    if (operator == '-') {
+    else if (operator == '-') {
       left = minus(left, next);
+    }
+    else {
+      exit(102);
     }
     operator = (char) skip_space();
   }
