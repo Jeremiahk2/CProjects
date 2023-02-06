@@ -41,7 +41,7 @@ static long parse_mul_div()
       left = times(current, left);
     }
     if (next == '/') {
-      left = times(left, current);
+      left = divide(left, current);
     }
     next = (char) skip_space();
     char trash = (char) skip_space();

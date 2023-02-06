@@ -31,7 +31,7 @@ int skip_space()
 long parse_value()
 {
   long value = 0;
-  value = getchar();
+  value = skip_space();
   bool negative = false;
   if (value == '-') {
     value = getchar();
