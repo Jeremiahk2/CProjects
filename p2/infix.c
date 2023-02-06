@@ -7,9 +7,13 @@
 /**
   @file infix.c
   @author Jeremiah Knizley
-  This file performs base 10 or base 12 calculations in a given expression
+  This file performs base 10 or base 12 calculations in a given expression 
 */
 
+/**
+  parses an expression. Expressions can be a single number or a number raised to an exponent
+  @return the expression in long form
+*/
 static long parse_exp()
 {
   long value = parse_value();
@@ -26,13 +30,15 @@ static long parse_exp()
 
   
 }
-
+/**
+  parses a sequence of multiplication or division operations between terms like 53 * 19 / 39
+  Also works on a number with no operators
+  @return the result of the operation.
+*/
 static long parse_mul_div()
 {
-  //the current value of everything to the left of the current expression
+  //default values for left and next, that way left doesn't change on the first iteration.
   long left = 1;
-  // char next = skip_space();
-  // ungetc(next, stdin);
   char next = '*';
 
   while (next != '+' && next != '-' && next != EOF && next != '\n') {
@@ -44,7 +50,7 @@ static long parse_mul_div()
       left = divide(left, current);
     }
     else {
-      exit(102);
+      exit(FAIL_INPUT);
     }
     next = (char) skip_space();
     char trash = (char) skip_space();
@@ -56,7 +62,9 @@ static long parse_mul_div()
 
 /**
   the main part of the program. 
-  Parses an expression written in base 10 or base 12 and returns a numerical answer
+  Parses an expression written in base 10 or base 12 and prints a numerical answer
+  ex. 10 * 10 * 10 in base 10 results in 1000, and EEE + 1 results in 1000 being printed
+  @return int the exit status
 */
 int main()
 {
@@ -64,7 +72,7 @@ int main()
   left = parse_mul_div();
   long next;
   char operator = (char) skip_space();
-  while (operator != EOF && operator != '\n') {
+  while (operator != EOF && operator != '\n') { //for parenthesis make this a method, but make it so that it ends with ).
     next = parse_mul_div();
     if (operator == '+') {
       left = plus(left, next);
@@ -73,7 +81,7 @@ int main()
       left = minus(left, next);
     }
     else {
-      exit(102);
+      exit(FAIL_INPUT);
     }
     operator = (char) skip_space();
   }
