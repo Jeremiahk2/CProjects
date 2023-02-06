@@ -20,7 +20,7 @@ int skip_space()
   bool charFound = false;
   char current = EOF;
   while (!charFound) {
-    char current = getchar();
+    current = getchar();
     if ( current != ' ' ) {
       charFound = true;
     }
@@ -31,16 +31,19 @@ int skip_space()
 long parse_value()
 {
   long value = 0;
-  char next = getchar();
+  value = getchar();
   bool negative = false;
-  if (next == '-') {
+  if (value == '-') {
+    value = getchar();
     negative = true;
-    next = getchar();
   }
+  value = value - 48;
+  char next = getchar();
   while (next >= '0' && next <= '9') {
     value = times(value, 10);
     value = plus(value, (long)next - 48);
     next = getchar();
+    // next = getchar();
   }
   ungetc( next, stdin );
   if (negative) {

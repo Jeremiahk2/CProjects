@@ -13,11 +13,14 @@
 static long parse_exp()
 {
   long value = parse_value();
-  char next = getchar();
+  char next = skip_space();
   long exponent;
   if ( next == '^' ) {
     exponent = parse_value();
     value = exponential(value, exponent);
+  }
+  else {
+    ungetc(next, stdin);
   }
   return value;
 
@@ -26,8 +29,6 @@ static long parse_exp()
 
 static long parse_mul_div()
 {
-
-  long current = parse_exp();
   //the current value of everything to the left of the current expression
   long left = 1;
   // char next = skip_space();
@@ -35,6 +36,7 @@ static long parse_mul_div()
   char next = '*';
 
   while (next != '+' && next != '-' && next != EOF) {
+    long current = parse_exp();
     if (next == '*') {
       left = times(current, left);
     }
@@ -44,7 +46,6 @@ static long parse_mul_div()
     next = (char) skip_space();
     char trash = (char) skip_space();
     ungetc(trash, stdin);
-    current = parse_exp();
   }
   ungetc(next, stdin);
   return left;

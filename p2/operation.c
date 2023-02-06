@@ -57,6 +57,14 @@ long times( long a, long b )
   if ( a == 0 || b == 0 ) {
     return 0;
   }
+  if (b == -1) {
+    if (a == LONG_MAX) {
+      exit(100);
+    }
+    else {
+      return a * b;
+    }
+  }
   if ( a > 0 && b > 0 ) {
     long x = LONG_MAX / b;
     if (a > x) {
