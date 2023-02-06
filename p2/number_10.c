@@ -60,7 +60,7 @@ void print_value( long val )
   else {
     if (val < 0) {
       putchar('-');
-      times(val, -1);
+      val = times(val, -1);
     }
     long digit = val % 10;
 

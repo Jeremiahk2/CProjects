@@ -1,5 +1,5 @@
 /** minimum long value */
-#define LONG_MIN -9223372036854775808ULL
+#define LONG_MIN (-9223372036854775807 - 1)
 /** maximum long value */
 #define LONG_MAX 9223372036854775807
 long plus(long, long);
