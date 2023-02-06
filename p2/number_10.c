@@ -32,23 +32,34 @@ long parse_value()
 {
   long value = 0;
   value = skip_space();
+  if (value == EOF || value == '\n') {
+    return EOF;
+  }
   bool negative = false;
   if (value == '-') {
-    value = getchar();
+    value = getchar() - 48;
+    value = times(value, -1);
     negative = true;
   }
-  value = value - 48;
-  char next = getchar();
+  else if (value >= '0' && value <= '9') {
+    value = value - 48;
+  }
+  else {
+    exit(102);
+  }
+  char next = skip_space();
   while (next >= '0' && next <= '9') {
     value = times(value, 10);
-    value = plus(value, (long)next - 48);
+    if (negative) {
+      value = minus(value, (long)next - 48);
+    }
+    else {
+      value = plus(value, (long)next - 48);
+    }
     next = getchar();
     // next = getchar();
   }
   ungetc( next, stdin );
-  if (negative) {
-    return times(value, -1);
-  }
   return value;
 }
 

@@ -35,7 +35,7 @@ static long parse_mul_div()
   // ungetc(next, stdin);
   char next = '*';
 
-  while (next != '+' && next != '-' && next != EOF) {
+  while (next != '+' && next != '-' && next != EOF && next != '\n') {
     long current = parse_exp();
     if (next == '*') {
       left = times(current, left);
@@ -61,7 +61,7 @@ int main()
   left = parse_mul_div();
   long next;
   char operator = (char) skip_space();
-  while (operator != EOF) {
+  while (operator != EOF && operator != '\n') {
     next = parse_mul_div();
     if (operator == '+') {
       left = plus(left, next);
