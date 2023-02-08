@@ -1,3 +1,9 @@
+/**
+  @file number.h
+  @author Jeremiah Knizley
+  Header file for number_10.c and number_12.c, defines constants and declares common functions for both.
+*/
+
 /** Exit status indicating that the program was given invalid input. */
 #define FAIL_INPUT 102
 /** the value of 0 in ASCII */

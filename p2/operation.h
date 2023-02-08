@@ -1,3 +1,9 @@
+/**
+  @file operation.h
+  @author Jeremiah Knizley
+  Header file for operation.c, declares and describes methods and constants used for both
+*/
+
 /** minimum long value */
 #define LONG_MIN (-9223372036854775807 - 1)
 /** maximum long value */
