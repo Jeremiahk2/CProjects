@@ -197,7 +197,7 @@ int main()
         left = plus(left, next);
       }
       else if (operator == '-') {
-      left = minus(left, next);
+        left = minus(left, next);
       }
       else {
         //main only handles plus or minus operators, if anything else is there it should fail.
