@@ -15,3 +15,9 @@
 
 /** For the extra credit, this is the color value for operators  */
 #define OP_COLOR 2
+
+int countLines(FILE);
+
+int readLine(FILE, char line[LINE_LIMIT + 1]);
+
+void printLine(char line[LINE_LIMIT + 1], int color[LINE_LIMIT]);
