@@ -45,10 +45,15 @@ bool markIdentifier(char word[], char line[], int color[])
     if (line[i] == word[0]) {
       //Set this true so that it can be falsified later
       found = true;
+      //If the character before this one isn't empty, it's not an identifier
+      if (i > 0 && line[i - 1] != ' ') {
+        found = false;
+      }
       //parse through word comparing it to line
-      for (int j = 0; word[j]; j++) {
+      int j;
+      for (j = 0; word[j]; j++) {
         // i + j to get the index in line
-        if (i + j > strlen(word)) {
+        if (i + j > strlen(line)) {
           //If we've been taken out of bounds, set found to false and break
           found = false;
           break;
@@ -58,7 +63,9 @@ bool markIdentifier(char word[], char line[], int color[])
           found = false;
           break;
         }
-
+      }
+      if (i + j < strlen(line) && line[i + j] != ' ' && line[i + j] != '\0') {
+        found = false;
       }
     }
     //If we did match the identifier, set foundAtAll true for returning, and cycle through

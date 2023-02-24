@@ -109,7 +109,8 @@ int main( int argc, char *argv[])
     char line[LINE_LIMIT + 1];
     //Get the next line
     readLine(stream, line);
-    int color[LINE_LIMIT];
+    //Initialize color to be full of 0's
+    int color[LINE_LIMIT] = {};
     //Check if the line has any identifiers
     bool identified = markIdentifier(argv[argc - 1], line, color);
     //If it does, print it with the correct color
@@ -117,17 +118,26 @@ int main( int argc, char *argv[])
       //Print history (in default color), then clear history
       for (int j = 0; j < context; j++) {
         if (history[j] != NULL) {
+          if (numbers) {
+            printf("%d: ", i + 1 - context + j);
+          }
           printf("%s\n", history[j]);
           history[j] = NULL;
         }
       }
       //print the actual identified line
+      if (numbers) {
+        printf("%d: ", i + 1);
+      }
       printLine(line, color);
       identIndex = i;
     }
     //Print it anyway if it's within the context.
-    else if (i - context >= identIndex) {
+    else if (i - context >= identIndex && context != 0) {
       //This SHOULD print it in default color if it wasn't identified
+      if (numbers) {
+        printf("%d: ", i + 1);
+      }
       printLine(line, color);
     }
     else {
