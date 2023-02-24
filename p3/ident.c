@@ -78,8 +78,8 @@ static void processArgs(int argc, char *argv[])
 
 int main( int argc, char *argv[]) 
 {
-  //If there aren't enough arguments, error.
-  if (argc < REQUIRED_ARGS) {
+  //If there aren't enough arguments, error. we use argc - 1 because argc starts at 0.
+  if (argc - 1 < REQUIRED_ARGS) {
     fprintf(stderr, "usage: ident [-c <context>] [-n] <file> <identifier>\n");
     exit(1);
   }
@@ -89,11 +89,13 @@ int main( int argc, char *argv[])
   FILE *stream = fopen(argv[argc - REQUIRED_ARGS], "r");
   //If the file couldn't be found, error
   if (stream == NULL) {
-    fprintf(stderr, "Can't open file: %s", argv[argc - REQUIRED_ARGS]);
+    fprintf(stderr, "Can't open file: %s\n", argv[argc - REQUIRED_ARGS]);
+    exit(1);
   }
   //If the identifier isn't valid, error
   if (!validIdentifier(argv[argc - 1])) {
-    fprintf(stderr, "Invalid identifier: %s", argv[argc - 1]);
+    fprintf(stderr, "Invalid identifier: %s\n", argv[argc - 1]);
+    exit(1);
   }
 
   // get number of lines for for loop.

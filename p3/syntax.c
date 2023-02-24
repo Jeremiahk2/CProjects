@@ -33,7 +33,7 @@ bool markIdentifier(char word[], char line[], int color[])
 {
   // If it's not valid, exit and print the invalid word to stderr
   if (!validIdentifier(word)) {
-    fprintf(stderr, "Invalid identifier: %s", word);
+    fprintf(stderr, "Invalid identifier: %s\n", word);
     exit(1);
   }
   //Need foundAtAll for returning because found may be true at some point, but then turned to false later.

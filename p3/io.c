@@ -30,7 +30,7 @@ int countLines(FILE *fp)
     //If it's just a new line, we need to consume it anyway to read the next line.
     nextChar = fgetc(fp);
     //if the array is full, but the next char isn't a new line or EOF, the line was too long.
-    if (strlen(str) == LINE_LIMIT && (nextChar != '\n' || nextChar != EOF)) {
+    if (strlen(str) == LINE_LIMIT && (nextChar != '\n' && nextChar != EOF)) {
       fprintf(stderr, "Input line too long\n");
       exit(1);
     }
