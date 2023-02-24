@@ -1,3 +1,5 @@
 ident
 stderr.txt
 output.txt
+expected-*.txt
+input-*.txt
