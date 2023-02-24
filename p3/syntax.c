@@ -45,8 +45,10 @@ bool markIdentifier(char word[], char line[], int color[])
     if (line[i] == word[0]) {
       //Set this true so that it can be falsified later
       found = true;
-      //If the character before this one isn't empty, it's not an identifier
-      if (i > 0 && line[i - 1] != ' ') {
+      //If the character before this one isn't one of the allowed characters, it's not a valid identifier
+      if (i > 0 && !((line[i - 1] >= ' ' && line[i - 1] <= '/') || (line[i - 1] >= ':' && line[i - 1] <= '?')
+          || (line[i - 1] >= '[' && line[i - 1] <= '^') || (line[i - 1] >= '{' && line[i - 1] <= '~')
+          || line[i - 1] == '`' || (line[i - 1] >= '0' && line[i - 1] <= '9'))) {
         found = false;
       }
       //parse through word comparing it to line
@@ -64,7 +66,10 @@ bool markIdentifier(char word[], char line[], int color[])
           break;
         }
       }
-      if (i + j < strlen(line) && line[i + j] != ' ' && line[i + j] != '\0') {
+      //If the character after the word isn't valid, then we didn't actually find a valid identifier
+      if (i + j < strlen(line) && !((line[i + j] >= ' ' && line[i + j] <= '/') || (line[i + j] >= ':' && line[i + j] <= '?')
+          || (line[i + j] >= '[' && line[i + j] <= '^') || (line[i + j] >= '{' && line[i + j] <= '~') || line[i + j] == '\n'
+          || line[i - 1] == '`' || (line[i - 1] >= '0' && line[i - 1] <= '9')) ) {
         found = false;
       }
     }

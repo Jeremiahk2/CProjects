@@ -86,6 +86,7 @@ int main( int argc, char *argv[])
   //Process the arguments 
   processArgs(argc, argv);
   //open the file
+
   FILE *stream = fopen(argv[argc - REQUIRED_ARGS], "r");
   //If the file couldn't be found, error
   if (stream == NULL) {
@@ -93,8 +94,8 @@ int main( int argc, char *argv[])
     exit(1);
   }
   //If the identifier isn't valid, error
-  if (!validIdentifier(argv[argc - 1])) {
-    fprintf(stderr, "Invalid identifier: %s\n", argv[argc - 1]);
+  if (!validIdentifier(argv[argc - REQUIRED_ARGS])) {
+    fprintf(stderr, "Invalid identifier: %s\n", argv[argc - REQUIRED_ARGS]);
     exit(1);
   }
 
