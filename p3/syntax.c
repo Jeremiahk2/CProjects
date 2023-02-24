@@ -6,9 +6,10 @@
 
 #include "syntax.h"
 #include <string.h>
-
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "io.h"
-
 /**
   Returns true if the parameter string is a legal identifier.
   @param ident the identifier to be used when parsing.
@@ -41,7 +42,7 @@ bool markIdentifier(char word[], char line[], int color[])
     //The string has not been found so we set it to false
     bool found = false;
     //If the current character equals the starting character of the identifier
-    if (line[i] = word[0]) {
+    if (line[i] == word[0]) {
       //Set this true so that it can be falsified later
       found = true;
       //parse through word comparing it to line

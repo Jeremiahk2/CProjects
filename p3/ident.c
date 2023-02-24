@@ -24,7 +24,7 @@ static int context = 0;
 static bool numbers = false;
   
 /** True if we're showing operators (for the extra credit). */
-static bool operators = false;
+//static bool operators = false;
 
 
 /**
@@ -99,7 +99,10 @@ int main( int argc, char *argv[])
   // get number of lines for for loop.
   int numLines = countLines(stream);
   //This fills the array with NULL pointers
-  char *history[context] = {};
+  char *history[context];
+  for (int i = 0; i < context; i++) {
+    history[i] = NULL;
+  }
   //Initialize this to numLines so that it's value won't mess up anything on first few iterations
   int identIndex = numLines;
   for (int i = 0; i < numLines; i++) {

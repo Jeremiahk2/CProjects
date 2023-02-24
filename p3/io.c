@@ -7,7 +7,6 @@
 
 #include "io.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 /**
@@ -29,7 +28,7 @@ int countLines(FILE *fp)
     matches = fscanf(fp, "%100[^\n]", str);
     //This should either be a random character, meaning the line was too long, or it'll be a new line or EOF which means the line wasn't too long.
     //If it's just a new line, we need to consume it anyway to read the next line.
-    extChar = fgetc(fp);
+    nextChar = fgetc(fp);
     //if the array is full, but the next char isn't a new line or EOF, the line was too long.
     if (strlen(str) == LINE_LIMIT && (nextChar != '\n' || nextChar != EOF)) {
       fprintf(stderr, "Input line too long\n");
@@ -55,10 +54,9 @@ int countLines(FILE *fp)
   */
 bool readLine(FILE *fp, char line[LINE_LIMIT + 1])
 {
-  char[] str;
   //get next line
-  fscanf(fp, "%100[^\n]", str);
-  char next = getchar();
+  fscanf(fp, "%100[^\n]", line);
+  char next = fgetc(fp);
   //if there is another line, return true
   if (next == '\n') {
     return true;
@@ -75,7 +73,7 @@ bool readLine(FILE *fp, char line[LINE_LIMIT + 1])
 void printLine(char line[LINE_LIMIT + 1], int color[LINE_LIMIT])
 {
   //Set old to default, so that the first iteration will just print the character like normal (if it's supposed to)
-  int old = DEFAULT_COLOR
+  int old = DEFAULT_COLOR;
   for (int i = 0; line[i]; i++) {
     //if the previous character was default, but the new one is INDENT, print the character with the red hexcode
     if (old == DEFAULT_COLOR && color[i] == IDENT_COLOR) {
