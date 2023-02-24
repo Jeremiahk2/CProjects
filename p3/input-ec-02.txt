@@ -1,0 +1,3 @@
+There are C operators like + - == << and !
+There are lots more like % * && sizeof ? : and <=
+There are some we haven't seen yet like . >> |= and ->

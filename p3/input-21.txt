@@ -1,0 +1,2 @@
+This input file doesn't matter since
+the command-line arguments are bad.

@@ -1,0 +1,10 @@
+ * Return true if the given value is prime.
+ */
+bool [31misPrime[0m( long val )
+{
+  // Check all smaller values as potential factors.
+  for ( long i = 2; i <= LIMIT; i++ ) {
+    // If it's prime, print it out.
+    if ( [31misPrime[0m( i ) ) {
+      printf( "%ld\n", i );
+    }

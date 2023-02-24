@@ -1,0 +1,28 @@
+  // A literal string evaluates to a (constant) char pointer.
+  // You can index off this pointer, like any other pointer.
+  char c = "abcdefg"[ 4 ];
+  [31mprintf[0m( "%c\n", c );
+
+  // This gives us two common ways to initialize
+  // string variables.
+
+  // Since str1 and str2 both look like pointers, we can often use
+  // these as if they are equivalent (but they're not).
+  [31mprintf[0m( "%s\n", str1 );
+  [31mprintf[0m( "%s\n", str2 );
+
+  // We can use similar syntax to initialize other array types (but
+  // literal strings have special support in C that other arrays don't)
+
+  // Here also, we can use these as if they're the same.
+  for ( int i = 0; i < 4; i++ )
+    [31mprintf[0m( "%d\n", list1[ i ] );
+
+  for ( int i = 0; i < 4; i++ )
+    [31mprintf[0m( "%d\n", list2[ i ] );
+
+  // But they're not the same.  list1 is an array, list2 is a pointer.
+  [31mprintf[0m( "%zd %zd\n", sizeof( list1 ), sizeof( list2 ) );  
+}
+// A couple of extra lines
+// at the end.

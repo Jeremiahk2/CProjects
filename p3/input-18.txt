@@ -1,0 +1,8 @@
+For this test, the identifier is longer than
+any line that can appear in the input file, so
+there can't be any matching lines in the file.
+But, the next two lines are near matches, with
+the as much of the start and the end of the
+identifier as we can fit.
+rechtsschutzversicherungsgesellschaften_arbeiterunfallverischerungsgesetz_nahrungsmittelunvertraglic
+sschutzversicherungsgesellschaften_arbeiterunfallverischerungsgesetz_nahrungsmittelunvertraglichkeit

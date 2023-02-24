@@ -1,0 +1,3 @@
+[31mThere[0m are C operators like [34m+[0m [34m-[0m [34m==[0m [34m<<[0m and [34m![0m
+[31mThere[0m are lots more like [34m%[0m [34m*[0m [34m&&[0m [34msizeof[0m [34m?[0m [34m:[0m and [34m<=[0m
+[31mThere[0m are some we haven't seen yet like [34m.[0m [34m>>[0m [34m|=[0m and [34m->[0m

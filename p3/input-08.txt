@@ -1,0 +1,6 @@
+Most of these should match.
+It's OK to have special characters right next to an identifier (_abc123)
+... and punctuation:_abc123.
+The numbers in front can't be part of the identifer, can they 123_abc123?
+But, this shouldn't match __abc123.
+Same here_abc123.

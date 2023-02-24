@@ -1,0 +1,1 @@
+This line matchs the [31mtest[0m identifier.  It's also exactly 100 characters long. I had to pad it a bit.

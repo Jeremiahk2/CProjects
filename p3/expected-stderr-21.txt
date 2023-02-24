@@ -1,0 +1,1 @@
+usage: ident [-c <context>] [-n] <file> <identifier>

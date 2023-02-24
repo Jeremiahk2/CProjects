@@ -1,0 +1,7 @@
+A match on the first line.
+A
+few
+lines
+in
+between,
+and a match on the last line.

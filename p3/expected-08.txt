@@ -1,0 +1,3 @@
+It's OK to have special characters right next to an identifier ([31m_abc123[0m)
+... and punctuation:[31m_abc123[0m.
+The numbers in front can't be part of the identifer, can they 123[31m_abc123[0m?

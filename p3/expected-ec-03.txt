@@ -1,0 +1,4 @@
+[31mlike[0m [34m+-==<<![0m
+and [31mlike[0m [34m%*&&sizeof?:<=[0m
+and [31mlike[0m [34m.>>|=->[0m
+but not comment syntax [31mlike[0m // /* and */

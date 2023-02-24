@@ -1,0 +1,26 @@
+/**
+   A character I/O program that
+   echos the input, replacing
+   spaces with dashes.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  // Keep reading until we
+  // hit the EOF.
+  int ch = getchar();
+  while ( ch != EOF ) {
+    // Print the input character, or
+    // a dash if it was a space.
+    if ( ch == ' ' )
+      putchar( '-' );
+    else
+      putchar( ch );
+    ch = getchar();
+  }
+
+  // Exit successfully
+  return EXIT_SUCCESS;
+}

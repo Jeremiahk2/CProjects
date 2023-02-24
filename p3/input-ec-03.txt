@@ -1,0 +1,6 @@
+These are still operators even if you
+don't leave space between them
+like +-==<<!
+and like %*&&sizeof?:<=
+and like .>>|=->
+but not comment syntax like // /* and */

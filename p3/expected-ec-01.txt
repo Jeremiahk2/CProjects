@@ -1,0 +1,8 @@
+ */
+bool isPrime( long [31mval[0m )
+{
+  // Check all smaller values as potential factors[34m.[0m
+  for ( long j [34m=[0m 2; j [34m*[0m j [34m<=[0m [31mval[0m; j[34m++[0m )
+    // Is this a factor[34m?[0m
+    if ( [31mval[0m [34m%[0m j [34m==[0m 0 )
+      return false;

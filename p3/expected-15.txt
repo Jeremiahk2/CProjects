@@ -1,0 +1,11 @@
+12:   // hit the EOF.
+13:   int [31mch[0m = getchar();
+14:   while ( [31mch[0m != EOF ) {
+15:     // Print the input character, or
+16:     // a dash if it was a space.
+17:     if ( [31mch[0m == ' ' )
+18:       putchar( '-' );
+19:     else
+20:       putchar( [31mch[0m );
+21:     [31mch[0m = getchar();
+22:   }

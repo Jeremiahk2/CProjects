@@ -1,0 +1,5 @@
+This is a short
+file, but we
+will ask [31mfor[0m a
+realy large context
+window.

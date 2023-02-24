@@ -1,0 +1,9 @@
+This input file has a line
+that's too long.  It's
+this next line right
+here.
+01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+Even though there is a match
+elsewhere in the file, the
+program should fail without
+printing anything.

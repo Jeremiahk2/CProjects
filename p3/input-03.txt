@@ -1,0 +1,3 @@
+nothing here
+a copy of the WORD in the middle of the line.
+another line with no matches.

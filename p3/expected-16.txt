@@ -1,0 +1,6 @@
+A [31mmatch[0m on the first line.
+A
+few
+in
+between,
+and a [31mmatch[0m on the last line.
