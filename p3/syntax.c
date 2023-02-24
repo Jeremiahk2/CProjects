@@ -16,7 +16,10 @@
   */
 bool validIdentifier(char ident[] )
 {
-
+  if (ident[0] >= '0' && ident[0] <= '9') {
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -27,5 +30,45 @@ bool validIdentifier(char ident[] )
   */
 bool markIdentifier(char word[], char line[], int color[])
 {
+  // If it's not valid, exit and print the invalid word to stderr
+  if (!validIdentifier(word)) {
+    fprintf(stderr, "Invalid identifier: %s", word);
+    exit(1);
+  }
+  //Need foundAtAll for returning because found may be true at some point, but then turned to false later.
+  bool foundAtAll = false;
+  for (int i = 0; line[i]; i++) {
+    //The string has not been found so we set it to false
+    bool found = false;
+    //If the current character equals the starting character of the identifier
+    if (line[i] = word[0]) {
+      //Set this true so that it can be falsified later
+      found = true;
+      //parse through word comparing it to line
+      for (int j = 0; word[j]; j++) {
+        // i + j to get the index in line
+        if (i + j > strlen(word)) {
+          //If we've been taken out of bounds, set found to false and break
+          found = false;
+          break;
+        }
+        //if the current location in line doesn't match word, set found to false and break.
+        if (line[i + j] != word[j]) {
+          found = false;
+          break;
+        }
 
+      }
+    }
+    //If we did match the identifier, set foundAtAll true for returning, and cycle through
+    //the color array for word's length at the current point in line, putting values as IDENT_COLOR
+    if (found) {
+      foundAtAll = true;
+      for (int k = 0; word[k]; k++) {
+        //No need for bounds checking since that was done before
+        color[i + k] = IDENT_COLOR;
+      }
+    }
+  }
+  return foundAtAll;
 }

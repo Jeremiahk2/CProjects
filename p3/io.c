@@ -78,15 +78,15 @@ void printLine(char line[LINE_LIMIT + 1], int color[LINE_LIMIT])
   int old = DEFAULT_COLOR
   for (int i = 0; line[i]; i++) {
     //if the previous character was default, but the new one is INDENT, print the character with the red hexcode
-    if (old == DEFAULT_COLOR && color[i] == INDENT_COLOR) {
+    if (old == DEFAULT_COLOR && color[i] == IDENT_COLOR) {
       printf("\x1b\x5b\x33\x31\x6d%c", color[i]);
     }
     //If the old color was also red, then print the character without the hexcode (because the color is already red)
-    else if (color[i] == INDENT_COLOR) {
+    else if (color[i] == IDENT_COLOR) {
       putchar(color[i]);
     }
     //If the old color was indented, but the new one is default, print the character with the default hexcode
-    if (old == INDENT_COLOR && color[i] == DEFAULT_COLOR) {
+    if (old == IDENT_COLOR && color[i] == DEFAULT_COLOR) {
       printf("\x1b\x5b\x30\x6d%c", color[i]);
     }
     //If the old color is already default, just print the character like normal (because the color is already default).
@@ -96,4 +96,5 @@ void printLine(char line[LINE_LIMIT + 1], int color[LINE_LIMIT])
     //Update old for the next iteration
     old = color[i];
   }
+  putchar('\n');
 }
