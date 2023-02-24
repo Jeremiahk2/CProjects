@@ -55,7 +55,10 @@ int countLines(FILE *fp)
 bool readLine(FILE *fp, char line[LINE_LIMIT + 1])
 {
   //get next line
-  fscanf(fp, "%100[^\n]", line);
+  int matches = fscanf(fp, "%100[^\n]", line);
+  if (matches ==  0) {
+    line[0] = '\0';
+  }
   char next = fgetc(fp);
   //if there is another line, return true
   if (next == '\n') {
