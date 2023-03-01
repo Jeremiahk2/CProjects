@@ -108,13 +108,16 @@ int main( int argc, char *argv[])
     count /= 10;
   }
   //This fills the array with NULL pointers
-  char *history[context];
+  // char *history[context];
+  // for (int i = 0; i < context; i++) {
+  //   history[i] = NULL;
+  // }
+  char history[context][LINE_LIMIT + 1];
   for (int i = 0; i < context; i++) {
-    history[i] = NULL;
+    history[i][0] = '\n';
   }
   //Initialize this to numLines so that it's value won't mess up anything on first few iterations
   int identIndex = numLines;
-  char temp[LINE_LIMIT + 1];
   for (int i = 0; i < numLines; i++) {
     char line[LINE_LIMIT + 1];
     //Get the next line
@@ -127,12 +130,12 @@ int main( int argc, char *argv[])
     if (identified) {
       //Print history (in default color), then clear history
       for (int j = 0; j < context; j++) {
-        if (history[j] != NULL) {
+        if (history[j][0] != '\n') {
           if (numbers) {
             printf("%*d: ", width, i + 1 - context + j);
           }
           printf("%s\n", history[j]);
-          history[j] = NULL;
+          history[j][0] = '\n';
         }
       }
       //print the actual identified line
@@ -143,7 +146,7 @@ int main( int argc, char *argv[])
       identIndex = i;
     }
     //Print it anyway if it's within the context.
-    else if (i - context >= identIndex && context != 0) {
+    else if (i > identIndex && i - identIndex <= context) {
       //This SHOULD print it in default color if it wasn't identified
       if (numbers) {
         printf("%*d: ", width, i + 1);
@@ -154,10 +157,13 @@ int main( int argc, char *argv[])
       bool added = false;
       for (int j = 0; j < context; j++) {
         //If there is an opening in history, put the line there
-        if (history[j] == NULL) {
+        if (history[j][0] == '\n') {
           // char temp[LINE_LIMIT + 1];
-          strcpy(temp, line);
-          history[j] = temp;
+          // strcpy((history + j), line);
+          for ( int k = 0; k < LINE_LIMIT + 1; k++ ) {
+            history[j][k] = line[k];
+          }
+          // history[j] = temp;
           added = true;
           break;
         }
@@ -165,10 +171,10 @@ int main( int argc, char *argv[])
       //If not, shift the lines down and add it to the top.
       if (!added) {
         for (int j = 0; j < context - 1; j++) {
-          history[j] = history[j + 1];
+          strcpy(*(history + j), *(history + j + 1));
         }
-        strcpy(temp, line);
-        history[context - 1] = temp;
+        strcpy(*(history + context - 1), line);
+        // *history(context - 1 )= temp;
       }
     }
   }
