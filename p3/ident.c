@@ -169,7 +169,7 @@ int main( int argc, char *argv[])
         }
       }
       //If not, shift the lines down and add it to the top.
-      if (!added) {
+      if (!added && context != 0) {
         for (int j = 0; j < context - 1; j++) {
           strcpy(*(history + j), *(history + j + 1));
         }
