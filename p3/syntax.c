@@ -28,6 +28,7 @@ bool validIdentifier(char ident[] )
   @param word the identifier to be used
   @param line the line to parse
   @param color the color array that holds information about which characters will be which color.
+  @return true if an identifier was found, false if not.
   */
 bool markIdentifier(char word[], char line[], int color[])
 {

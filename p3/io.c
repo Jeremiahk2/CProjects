@@ -32,6 +32,7 @@ int countLines(FILE *fp)
     //if the array is full, but the next char isn't a new line or EOF, the line was too long.
     if (strlen(str) == LINE_LIMIT && (nextChar != '\n' && nextChar != EOF)) {
       fprintf(stderr, "Input line too long\n");
+      fclose(fp);
       exit(1);
     }
     //increase the number of lines.
@@ -51,6 +52,9 @@ int countLines(FILE *fp)
 /**
   reads the next line from the given file and stores it in the given string.
   Returns true if there is another line to read, and false otherwise.
+  @param fp the file stream to read from
+  @param line the place to store the line
+  @return true if there is another line, false if not
   */
 bool readLine(FILE *fp, char line[LINE_LIMIT + 1])
 {
@@ -72,6 +76,8 @@ bool readLine(FILE *fp, char line[LINE_LIMIT + 1])
   prints the given line to standard output. The given color array should have an element
   for each character of the line. DEFAULT_COLOR means default, IDENT_COLOR means it will be printed red
   OP_COLOR means a character should be printed blue
+  @param line the line to print
+  @param color the array that determines the color of the characters in line
   */
 void printLine(char line[LINE_LIMIT + 1], int color[LINE_LIMIT])
 {

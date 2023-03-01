@@ -16,6 +16,8 @@
 #define REQUIRED_ARGS 2
 /** length of the option strings on the command line. */
 #define OPTION_LENGTH 2
+/** Numerical base 10 */
+#define BASE_TEN 10
 
 /** Lines of context to show around an identifier. */
 static int context = 0;
@@ -59,11 +61,11 @@ static void processArgs(int argc, char *argv[])
     }
     if (*argv[i] == '-') {
       //If the string is just -n, numbers is true
-      if (*(argv[i] + 1) == 'n' && strlen(argv[i]) == 2) {
+      if (*(argv[i] + 1) == 'n' && strlen(argv[i]) == REQUIRED_ARGS) {
         numbers = true;
       }
       // if the string is -c, context is true, and the next argument should be a number.
-      else if (*(argv[i] + 1) == 'c' && strlen(argv[i]) == 2) {
+      else if (*(argv[i] + 1) == 'c' && strlen(argv[i]) == REQUIRED_ARGS) {
         contextual = true;
       }
       //If there is a dash but something besides n or c follow it, it's invalid.
@@ -75,7 +77,16 @@ static void processArgs(int argc, char *argv[])
   }
 }
 
-
+/**
+  Main part of the program. 
+  Takes command line arguments in the form:
+  ./ident -c (optional) (num context lines)(optional) -n (optional) (filename) (identifier)
+  -c flags context lines
+  -n flags line numbers
+  Returns the lines that contain the identifier
+  @param argc number of command-line arguments
+  @param argv the array of command-line arguments
+  @return exit status*/
 int main( int argc, char *argv[]) 
 {
   //If there aren't enough arguments, error. we use argc - 1 because argc starts at 0.
@@ -96,6 +107,7 @@ int main( int argc, char *argv[])
   //If the identifier isn't valid, error
   if (!validIdentifier(argv[argc - REQUIRED_ARGS])) {
     fprintf(stderr, "Invalid identifier: %s\n", argv[argc - REQUIRED_ARGS]);
+    fclose(stream);
     exit(1);
   }
 
@@ -105,7 +117,7 @@ int main( int argc, char *argv[])
   int count = numLines;
   while (count != 0) {
     width++;
-    count /= 10;
+    count /= BASE_TEN;
   }
   //This fills the array with NULL pointers
   // char *history[context];
@@ -178,5 +190,6 @@ int main( int argc, char *argv[])
       }
     }
   }
+  fclose(stream);
   return EXIT_SUCCESS;
 }
