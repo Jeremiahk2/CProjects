@@ -1,10 +1,9 @@
 /**
   @file io.c
   @author Jeremiah Knizley
-  File responsible for hyandling lines of text from an input file
+  File responsible for handling lines of text from an input file
   and printing them with color highlighting as needed
   */
-
 #include "io.h"
 #include <stdlib.h>
 #include <string.h>

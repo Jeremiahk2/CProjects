@@ -1,7 +1,8 @@
 /**
   @file ident.c
   @author Jeremiah Knizley
-  Contains main, responsible for parsing command-line arguments and reading an input file to report matching lines.
+  Contains main, responsible for parsing command-line arguments, matching an identifier
+  and returning lines containing that identifier, as well as any context lines and line numbers requested
   */
 
 #include <stdlib.h>
@@ -26,7 +27,7 @@ static int context = 0;
 static bool numbers = false;
   
 /** True if we're showing operators (for the extra credit). */
-//static bool operators = false;
+//static bool operators = false; //NOT OPERATIONAL
 
 
 /**
@@ -119,12 +120,10 @@ int main( int argc, char *argv[])
     width++;
     count /= BASE_TEN;
   }
-  //This fills the array with NULL pointers
-  // char *history[context];
-  // for (int i = 0; i < context; i++) {
-  //   history[i] = NULL;
-  // }
+  //Two dimensional array containing strings
   char history[context][LINE_LIMIT + 1];
+  //Initialize all first characters of each string to be a newline marking a string that hasn't been initialized yet
+  //Could also do this with NULL, but this might cause problems later since we can't use malloc
   for (int i = 0; i < context; i++) {
     history[i][0] = '\n';
   }
@@ -170,12 +169,7 @@ int main( int argc, char *argv[])
       for (int j = 0; j < context; j++) {
         //If there is an opening in history, put the line there
         if (history[j][0] == '\n') {
-          // char temp[LINE_LIMIT + 1];
-          // strcpy((history + j), line);
-          for ( int k = 0; k < LINE_LIMIT + 1; k++ ) {
-            history[j][k] = line[k];
-          }
-          // history[j] = temp;
+          strcpy(*(history + j), line);
           added = true;
           break;
         }
@@ -186,10 +180,10 @@ int main( int argc, char *argv[])
           strcpy(*(history + j), *(history + j + 1));
         }
         strcpy(*(history + context - 1), line);
-        // *history(context - 1 )= temp;
       }
     }
   }
+  //Remember to close!
   fclose(stream);
   return EXIT_SUCCESS;
 }

@@ -1,4 +1,8 @@
 /**
+  @file io.h
+  @author Jeremiah Knizley
+  header file for io.c. Contains some preprocessor macros and methods 
+  that will be used in syntax.c and ident.c
   */
 
 #include <stdio.h>

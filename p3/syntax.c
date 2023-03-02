@@ -1,9 +1,8 @@
 /**
   @file syntax.c
   @author Jeremiah Knizley
-  This file is responsible for determining identifiers from strings
+  This file is responsible for finding identifiers from strings
   */
-
 #include "syntax.h"
 #include <string.h>
 #include <stdio.h>
@@ -17,10 +16,12 @@
   */
 bool validIdentifier(char ident[] )
 {
-  if (ident[0] >= '0' && ident[0] <= '9') {
-    return false;
+  //This could be simplified, but it's more readable like this.
+  //First character must be a letter or an underscore
+  if ((ident[0] >= 'A' && ident[0] <= 'Z') || (ident[0] >= 'a' && ident[0] <= 'z') || ident[0] == '_') {
+    return true;
   }
-  return true;
+  return false;
 }
 
 /**
