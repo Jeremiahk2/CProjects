@@ -1,0 +1,52 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+/**
+  reads the next line from the input. 
+  Afterwards, the fp paramater will have progressed past a newline character (if it didn't find EOF)
+  @param fp the file to read a line from.
+  @return a pointer to the array containing the line, or NULL if it found EOF instantly.
+  */
+char *readLine(FILE *fp)
+{
+  //Initialize bool values that will control when the loop will end.
+  bool newLineFound = false;
+  bool endOfFile = false;
+  //Initialize line to hold one character. This will expand as we go.
+  //ASIDE: length of 0 seemingly causes problems with scanf, and we always want a null terminator anyway.
+  char *line = (char *)malloc(1 * sizeof(char));
+  //Need to keep track of the length of "array" of characters.
+  int memLength = 1;
+  int lineLength = 0;
+
+  while (!(newLineFound || endOfFile)) {
+    //Get next char from file.
+    char current = fgetc(fp);
+    //If it's new line, make a note of it. If it's EOF, make a note of it. If not, put the character in the array.
+    if (current == '\n') {
+      newLineFound = true;
+    }
+    else if (current == EOF) {
+      endOfFile = true;
+    }
+    else {
+      *(line + lineLength) = current;
+      lineLength++;
+      //If we are out of memory.
+      if (lineLength == memLength) {
+        //Resize the line array. We want it to change our memlength, but keep lineLength the same.
+        line = realloc(line, memLength *= 2);
+      }
+    }
+  }
+  if (lineLength == 0 && endOfFile) {
+    return NULL;
+  }
+  else {
+    //Shouldn't need to resize for null terminator because it was done just prior to this.
+    *(line + lineLength) = '\0';
+    return line;
+  }
+}
