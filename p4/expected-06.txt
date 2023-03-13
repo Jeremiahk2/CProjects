@@ -1,0 +1,14 @@
+cmd> list department MAT
+Course  Name                           Timeslot
+MAT 201 Calculus I                     TH  4:00
+MAT 202 Calculus II                    MW  4:00
+MAT 230 Intro to Computing             TH  8:30
+MAT 301 Linear Algebra                 TH  4:00
+
+cmd> list department PHY
+Course  Name                           Timeslot
+PHY 101 Intro to Psychology            MW  1:00
+PHY 245 Child Development              TH  8:30
+PHY 325 Educational Psychology         TH  2:30
+
+cmd> quit

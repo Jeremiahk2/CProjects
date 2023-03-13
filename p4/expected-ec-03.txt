@@ -1,0 +1,10 @@
+cmd> calendar
+         Mon      Tue      Wed      Thu
+ 8:30                                    
+10:00                                    
+11:30                                    
+ 1:00                                    
+ 2:30                                    
+ 4:00                                    
+
+cmd> quit

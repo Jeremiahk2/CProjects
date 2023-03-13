@@ -1,0 +1,6 @@
+cmd> list department MPA
+Course  Name                           Timeslot
+MPA 240 vEOZzAnqcPBf                   TH  1:00
+MPA 606 WmsFxabfenVogSzoj              TH  4:00
+
+cmd> quit

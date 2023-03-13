@@ -1,0 +1,22 @@
+cmd> add YLF 591
+
+cmd> add WHY 629
+
+cmd> add USA 814
+
+cmd> add QPR 673
+
+cmd> add AOE 476
+
+cmd> add CAZ 995
+
+cmd> list schedule
+Course  Name                           Timeslot
+QPR 673 HPFPvFjZwVvithGDCXwoa          MW 10:00
+AOE 476 ntRGOimEOyqYTK                 MW  2:30
+WHY 629 tmnlAZGQPlwMCBahwlf            MW  4:00
+CAZ 995 MGHrrodpsIt tQbhhO GRyNJCvcY   TH 10:00
+YLF 591 rxtxRTBOcsDXtPyFbRYNYuCs       TH 11:30
+USA 814 SQkTWuC LLV                    TH  2:30
+
+cmd> quit

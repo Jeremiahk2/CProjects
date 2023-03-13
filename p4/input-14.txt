@@ -1,0 +1,27 @@
+list courses
+add XYZ 200
+add CSC 116
+list nonsense
+list schedule
+add ENG 202
+add ACC 101
+add ALS 230
+add BSC 145
+add COM 450
+add CSC 116
+add CSC 316
+add ENG 202
+add ENG 301
+add FLF 101
+add FLF 102
+add MAT 201
+add MAT 202
+add MAT 230
+add MAT 301
+add PHY 101
+add PHY 245
+add PHY 325
+list schedule
+drop PHY 340
+list names
+quit

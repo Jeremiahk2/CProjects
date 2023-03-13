@@ -1,0 +1,5 @@
+add MAT 201
+add CSC 116
+add STA 200
+list schedule
+quit

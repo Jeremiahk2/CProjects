@@ -1,0 +1,9 @@
+cmd> list courses
+Course  Name                           Timeslot
+ACC 101 Intro to Accounting            MW  8:30
+ALS 230 Crop Rotation                  TH 10:00
+ENG 301 Creative Writing               TH 11:30
+MAT 201 Calculus I                     TH  4:00
+PHY 245 Child Development              TH  8:30
+
+cmd> 

@@ -1,0 +1,20 @@
+cmd> add ACC 101
+
+cmd> add CSC 116
+
+cmd> add STA 200
+
+cmd> add PHY 245
+
+cmd> add MAT 201
+
+cmd> calendar
+         Mon      Tue      Wed      Thu
+ 8:30  ACC 101  PHY 245  ACC 101  PHY 245
+10:00           STA 200           STA 200
+11:30  CSC 116           CSC 116         
+ 1:00                                    
+ 2:30                                    
+ 4:00           MAT 201           MAT 201
+
+cmd> quit

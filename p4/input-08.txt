@@ -1,0 +1,11 @@
+add BSC 145
+add PHY 101
+add FLF 101
+add ENG 301
+add COM 450
+add MAT 301
+add CSC 316
+drop ENG 301
+drop MAT 301
+list schedule
+quit

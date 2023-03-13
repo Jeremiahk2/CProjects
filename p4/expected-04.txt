@@ -1,0 +1,24 @@
+cmd> list names
+Course  Name                           Timeslot
+MAT 201 Calculus I                     TH  4:00
+MAT 202 Calculus II                    MW  4:00
+PHY 245 Child Development              TH  8:30
+ENG 301 Creative Writing               TH 11:30
+ALS 230 Crop Rotation                  TH 10:00
+CSC 316 Data Structures                MW  4:00
+ARC 330 Design Theory                  TH  8:30
+PHY 325 Educational Psychology         TH  2:30
+WPS 230 Forestry Management            TH  8:30
+FLF 101 French 1                       TH  1:00
+FLF 102 French 2                       MW  1:00
+ACC 101 Intro to Accounting            MW  8:30
+CSC 116 Intro to Computing             MW 11:30
+MAT 230 Intro to Computing             TH  8:30
+PHY 101 Intro to Psychology            MW  1:00
+MAT 301 Linear Algebra                 TH  4:00
+STA 200 Statistics for Engineers       TH 10:00
+ENG 202 Technical Writing              MW 11:30
+COM 450 Video Production               TH 10:00
+BSC 145 Zoology                        MW  8:30
+
+cmd> quit

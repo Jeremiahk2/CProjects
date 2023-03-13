@@ -1,0 +1,25 @@
+list courses
+list names
+list department PHY
+add ACC 101
+add CSC 116
+add ALS 230
+add FLF 102
+add PHY 245
+add PHY 325
+add CSC 316
+add CSC 230
+list schedule
+list names
+list timeslot MW 2:30
+drop PHY 245
+drop ACC 101
+list schedule
+list timeslot TH 8:30
+list department MAT
+list names
+add MAT 230
+list schedule
+list timeslot TH 1:00
+list names
+quit

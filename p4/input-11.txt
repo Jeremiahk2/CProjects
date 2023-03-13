@@ -1,0 +1,8 @@
+add YLF 591
+add WHY 629
+add USA 814
+add QPR 673
+add AOE 476
+add CAZ 995
+list schedule
+quit

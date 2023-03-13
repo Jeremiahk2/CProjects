@@ -1,0 +1,30 @@
+cmd> add MQK 619
+
+cmd> add YQN 121
+
+cmd> add DRP 169
+
+cmd> add IRD 199
+
+cmd> add EII 797
+
+cmd> add LZB 690
+
+cmd> add EIF 711
+
+cmd> add JFI 423
+
+cmd> add ZUD 203
+
+cmd> add KCD 362
+
+cmd> calendar
+         Mon      Tue      Wed      Thu
+ 8:30  JFI 423           JFI 423         
+10:00  IRD 199  ZUD 203  IRD 199  ZUD 203
+11:30  LZB 690  MQK 619  LZB 690  MQK 619
+ 1:00  YQN 121  DRP 169  YQN 121  DRP 169
+ 2:30  EIF 711  KCD 362  EIF 711  KCD 362
+ 4:00           EII 797           EII 797
+
+cmd> quit

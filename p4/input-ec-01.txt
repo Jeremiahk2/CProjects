@@ -1,0 +1,7 @@
+add ACC 101
+add CSC 116
+add STA 200
+add PHY 245
+add MAT 201
+calendar
+quit

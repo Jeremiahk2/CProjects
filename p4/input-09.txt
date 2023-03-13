@@ -1,0 +1,14 @@
+list courses
+list names
+list department CSC
+add ACC 101
+add CSC 116
+add STA 200
+add PHY 245
+add MAT 201
+list schedule
+list timeslot TH 11:30
+drop PHY 245
+drop ACC 101
+list schedule
+quit

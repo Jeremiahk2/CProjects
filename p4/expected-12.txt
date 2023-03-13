@@ -1,0 +1,49 @@
+cmd> add MQK 619
+
+cmd> add YQN 121
+
+cmd> add DRP 169
+
+cmd> add IRD 199
+
+cmd> add EII 797
+
+cmd> add LZB 690
+
+cmd> add EIF 711
+
+cmd> add JFI 423
+
+cmd> add ZUD 203
+
+cmd> add KCD 362
+
+cmd> list schedule
+Course  Name                           Timeslot
+JFI 423 ybgNvHnHkECvvHLVxcPjbiCkjy     MW  8:30
+IRD 199 yNscllqdokmTG                  MW 10:00
+LZB 690 yXYswRwUSpIHLDdlNKtKHw         MW 11:30
+YQN 121 yEuyElMQyncUdjHoUQispXE        MW  1:00
+EIF 711 yYISwzguTJptjFVbcuSzNDpgyQd    MW  2:30
+ZUD 203 yeBpeBrQyMbFB                  TH 10:00
+MQK 619 xzWuFUMSjXuLUjLpgxCPAcHu       TH 11:30
+DRP 169 yJWRAxuKMp xxPUGNjCKpxklBt     TH  1:00
+KCD 362 ypbvevwbiAktGfJdeUiLImxgUBn    TH  2:30
+EII 797 yVsZwpqQfuY                    TH  4:00
+
+cmd> drop YQN 121
+
+cmd> drop EII 797
+
+cmd> list schedule
+Course  Name                           Timeslot
+JFI 423 ybgNvHnHkECvvHLVxcPjbiCkjy     MW  8:30
+IRD 199 yNscllqdokmTG                  MW 10:00
+LZB 690 yXYswRwUSpIHLDdlNKtKHw         MW 11:30
+EIF 711 yYISwzguTJptjFVbcuSzNDpgyQd    MW  2:30
+ZUD 203 yeBpeBrQyMbFB                  TH 10:00
+MQK 619 xzWuFUMSjXuLUjLpgxCPAcHu       TH 11:30
+DRP 169 yJWRAxuKMp xxPUGNjCKpxklBt     TH  1:00
+KCD 362 ypbvevwbiAktGfJdeUiLImxgUBn    TH  2:30
+
+cmd> quit

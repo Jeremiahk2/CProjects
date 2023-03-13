@@ -1,0 +1,27 @@
+cmd> add BSC 145
+
+cmd> add PHY 101
+
+cmd> add FLF 101
+
+cmd> add ENG 301
+
+cmd> add COM 450
+
+cmd> add MAT 301
+
+cmd> add CSC 316
+
+cmd> drop ENG 301
+
+cmd> drop MAT 301
+
+cmd> list schedule
+Course  Name                           Timeslot
+BSC 145 Zoology                        MW  8:30
+PHY 101 Intro to Psychology            MW  1:00
+CSC 316 Data Structures                MW  4:00
+COM 450 Video Production               TH 10:00
+FLF 101 French 1                       TH  1:00
+
+cmd> quit

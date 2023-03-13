@@ -1,0 +1,6 @@
+cmd> list department CSC
+Course  Name                           Timeslot
+CSC 116 Intro to Computing             MW 11:30
+CSC 316 Data Structures                MW  4:00
+
+cmd> quit

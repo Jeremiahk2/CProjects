@@ -1,0 +1,12 @@
+add MQK 619
+add YQN 121
+add DRP 169
+add IRD 199
+add EII 797
+add LZB 690
+add EIF 711
+add JFI 423
+add ZUD 203
+add KCD 362
+calendar
+quit

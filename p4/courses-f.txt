@@ -1,0 +1,15 @@
+CSC  316  MW   4:00   Data Structures
+MAT 301 TH  4:00 Linear Algebra
+STA     200 TH  10:00   Statistics for Engineers
+CSC 116  MW   11:30 Intro to Computing
+MAT 230 TH  8:30 Intro to Computing
+PHY 325 TH 2:30   Educational Psychology
+ENG 202 MW 11:30 Technical Writing
+PHY 101 MW  1:00 Intro to Psychology
+MAT 202 MW  Calculus II
+ARC 330 TH    8:30 Design Theory
+BSC  145 MW  8:30  Zoology
+COM 450 TH  10:00 Video Production
+FLF 101 TH  1:00 French 1
+FLF  102  MW 1:00 French 2
+WPS  230  TH   8:30 Forestry Management

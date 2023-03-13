@@ -1,0 +1,13 @@
+cmd> add MAT 201
+
+cmd> add CSC 116
+
+cmd> add STA 200
+
+cmd> list schedule
+Course  Name                           Timeslot
+CSC 116 Intro to Computing             MW 11:30
+STA 200 Statistics for Engineers       TH 10:00
+MAT 201 Calculus I                     TH  4:00
+
+cmd> quit

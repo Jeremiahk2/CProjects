@@ -1,0 +1,5 @@
+ACC 101 MW  8:30 Intro to Accounting
+ALS 230 TH 10:00 Crop Rotation
+ENG 301 TH 11:30 Creative Writing
+MAT 201 TH  4:00 Calculus I
+PHY 245 TH  8:30 Child Development
