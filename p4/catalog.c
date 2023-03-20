@@ -4,11 +4,11 @@
 
 struct CourseStruct
 {
-  char *dept;
+  char dept[4];
   int number;
-  char *days;
-  char *time;
-  char *name;
+  char days[3];
+  char time[6];
+  char name[31];
 };
 typedef struct CourseStruct Course;
 
@@ -90,6 +90,72 @@ void readCourses(char const *filename, Catalog *catalog)
     if (strcmp(current.dept, dept) == 0 && current.number == number) {
       fprintf(stderr, "Invalid course file: %s", filename);
       exit(1);
+    }
+  }
+}
+int idComp(const void *aptr, const void *bptr)
+{
+  Course const *a = aptr;
+  Course const *b = bptr;
+
+  char idA[4] = a->dept;
+  char idB[4] = b->dept;
+
+
+
+  if (strcmp(idA, idB) < 0) {
+    return -1;
+  }
+  else if (strcmp(idA, idB) == 0) {
+    if (a->number < b->number) {
+      return -1;
+    }
+    else if (a-> number > b->number) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
+  }
+  else {
+    return 1;
+  }
+
+}
+int nameComp(const void *aptr, const void *bptr)
+{
+  Course const *a = aptr;
+  Course const *b = bptr;
+
+  char *nameA = a->name;
+  char *nameB = b->name;
+
+  if (strcmp(nameA, nameB) < 0) {
+    return -1;
+  }
+  else if (strcmp(idA, idB) > 0) {
+    return 1;
+  }
+  else {
+    return idComp(aptr, bptr);
+  }
+}
+
+void sortCourses(Catalog *catalog, int (* compare) (void const *va, void const *vb))
+{
+  qsort(catalog->list, catalog->count, sizeof(Course *), compare);
+}
+
+void listCourses(Catalog *catalog, bool (*test) (Course const *course, char const *str1, char const *str2), char const *str1, char const *str2)
+{
+  for (int i = 0; i < catalog->count; i++) {
+    if (test(catalog->list[i], str1, str2)) {
+      char *dept = (catalog->list[i])->dept;
+      int number = (catalog->list[i])->number;
+      char *days = (catalog->list[i])->days;
+      char *time = (catalog->list[i])->time;
+      char *name = (catalog->list[i])->name;
+      printf("%s %d %-30s %s %5s", dept, number, name, days, time);
     }
   }
 }
