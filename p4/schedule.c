@@ -190,13 +190,13 @@ int main(int argc, char *argv[])
     int matches = sscanf(command, "%s%n", first, &pos);
 
     //Check the first part of the command.
-    if (matches && strcmp(first, "list") == 0) {
+    if (matches && (strcmp(first, "list") == 0)) {
       //If it's list, check the second parameter of the command.
       char second[strlen(command)];
       int secondMatches = sscanf(command + pos, "%s%n", second, &pos);
 
       //If the command is "list courses"
-      if (secondMatches && strcmp(second, "courses") == 0) {
+      if (secondMatches && (strcmp(second, "courses") == 0)) {
         //First, sort courses by ID
         sortCourses(catalog, idComp);
         //Then list all courses
@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
       }
 
       //If the command is "list names"
-      else if (secondMatches && strcmp(second, "names") == 0) {
+      else if (secondMatches && (strcmp(second, "names") == 0)) {
         //Sort courses by name first.
         sortCourses(catalog, nameComp);
         //Then list all courses
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
       }
 
       //If the command is "list department <dept>"
-      else if (secondMatches && strcmp(second, "department") == 0) {
+      else if (secondMatches && (strcmp(second, "department") == 0)) {
         char third[strlen(command)];
         int thirdMatches = sscanf(command + pos, "%[A-Z]", third);
         if (thirdMatches == 0 || strlen(third) != 3) {
@@ -227,13 +227,13 @@ int main(int argc, char *argv[])
       }
 
       //If the command is "list timeslot <days> <time>"
-      else if (secondMatches && strcmp(second, "timeslot") == 0) {
+      else if (secondMatches && (strcmp(second, "timeslot") == 0)) {
         char third[strlen(command)]; //Contains days
         char fourth[strlen(command)]; //Contains time
         sscanf(command + pos, "%s %s", third, fourth);
-        if ((strcmp(third, "MW") != 0 && strcmp(third, "TH") != 0)
-            || (strcmp(fourth, "8:30") != 0 && strcmp(fourth, "10:00") != 0 && strcmp(fourth, "11:30") != 0 
-            && strcmp(fourth, "1:00") != 0 && strcmp(fourth, "2:30") != 0 && strcmp(fourth, "4:00") != 0)) {
+        if (((strcmp(third, "MW") != 0) && (strcmp(third, "TH") != 0))
+            || ((strcmp(fourth, "8:30") != 0) && (strcmp(fourth, "10:00") != 0) && (strcmp(fourth, "11:30") != 0) 
+            && (strcmp(fourth, "1:00") != 0) && (strcmp(fourth, "2:30") != 0) && (strcmp(fourth, "4:00") != 0))) {
           
           printf("Invalid command\n");
         }
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
       }
 
       //If the command is "list schedule"
-      else if (secondMatches && strcmp(second, "schedule") == 0) {
+      else if (secondMatches && (strcmp(second, "schedule") == 0)) {
         //First sort the courses
         sortCourses(catalog, scheduleComp);
         //Print all courses in schedule
@@ -261,7 +261,7 @@ int main(int argc, char *argv[])
 
 
     //If the command is "add <dept> <number>"
-    else if (matches && strcmp(first, "add")) {
+    else if (matches && (strcmp(first, "add") == 0)) {
       //If the schedule is already at capacity, we don't want to do any of this
       if (!(schedule->capacity == schedule->count)) {
         char dept[strlen(command)]; //the department to add
@@ -300,7 +300,7 @@ int main(int argc, char *argv[])
     }
 
     //If the command is "drop <dept> <number>"
-    else if (matches && strcmp(first, "drop")) {
+    else if (matches && (strcmp(first, "drop") == 0)) {
       char dept[strlen(command)]; //the department to add
       int number; //the number to add
       sscanf(command + pos, "%s %d", dept, &number);
