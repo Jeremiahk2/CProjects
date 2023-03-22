@@ -1,29 +1,4 @@
-
-/**
-  Struct for Course objects. Contains dept, number, days, time, and name of the course
-*/
-struct CourseStruct
-{
-  char dept[4];
-  int number;
-  char days[3];
-  char time[6];
-  char name[31];
-};
-// typedef struct CourseStruct Course;
-
-/**
-  Struct for Catalog objects. Note: Catalog can be used for schedules too.
-  Contains a list of Course pointers, as well as the number and capacity of the catalog
-*/
-struct CatalogStruct
-{
-  Course **list;
-  int count;
-  int capacity;
-};
-// typedef struct CatalogStruct Catalog;
-
+#include "catalog.h"
 /**
   Creates a new catalog and returns it
   @return the new catalog
@@ -65,18 +40,18 @@ void readCourses(char const *filename, Catalog *catalog)
     exit(1);
   }
   char *line;
-  while (line = readLine(fp)) { //May need to free line on each pass
+  while ( (line = readLine(fp)) ) { //May need to free line on each pass
     char dept[4];
     int number;
     char days[3];
     char time[6];
     char name[31];
-    int matches = sscanf(line, " %[A-Z] %d %s %s %[A-Za-z]", dept, number, days, time, name);
-    if (matches != 5) {
+    int matches = sscanf(line, " %[A-Z] %d %s %s %[A-Za-z]", dept, &number, days, time, name);
+    if (matches != 5 || strlen(dept) != 3) {
       fprintf(stderr, "Invalid course file: %s", filename);
       exit(1);
     }
-    if (dept < 100 || dept > 999) {
+    if (number < 100 || number > 999) {
       fprintf(stderr, "Invalid course file: %s", filename);
       exit(1);
     }
@@ -96,24 +71,27 @@ void readCourses(char const *filename, Catalog *catalog)
       catalog->list = (Course **)realloc(catalog->list, catalog->capacity * 2 * sizeof(Course *));
       catalog->capacity *= 2;
     }
-    Course course = {.dept = dept,
-                     .number = number,
-                     .days = days,
-                     .time = time,
-                     .name = name};
+    Course course;
+    strcpy(course.dept, dept);
+    course.number = number;
+    strcpy(course.days, days);
+    strcpy(course.time, time);
+    strcpy(course.name, name);
+
     Course *coursePointer = (Course *)malloc(sizeof(Course));
     *coursePointer = course;
-    catalog->list[count] = coursePointer;
+    catalog->list[catalog->count] = coursePointer;
     catalog->count++;
-  }
-  for (int i = 0; i < catalog->count - 1; i++) {
-    Course current = *(catalog->list[i]);
-    if (strcmp(current.dept, dept) == 0 && current.number == number) {
-      fprintf(stderr, "Invalid course file: %s", filename);
-      exit(1);
+    //Pretty sure this next part goes here, but I didn't put alot of thought into it.
+    for (int i = 0; i < catalog->count - 1; i++) {
+      Course current = *(catalog->list[i]);
+      if (strcmp(current.dept, dept) == 0 && current.number == number) {
+        fprintf(stderr, "Invalid course file: %s", filename);
+        exit(1);
+      }
     }
   }
-  free(fp);
+  fclose(fp);
 }
 
 /**

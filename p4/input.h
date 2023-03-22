@@ -9,4 +9,4 @@
   Header file for input.c. Contains all methods
 */
 
-char *readLine(FILE);
+char *readLine(FILE *);

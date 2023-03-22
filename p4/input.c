@@ -1,4 +1,4 @@
-
+#include "input.h"
 /**
   @file input.c
   @author Jeremiah Knizley

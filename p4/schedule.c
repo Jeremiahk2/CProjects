@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include "catalog.h"
+#include "input.h"
 
 /**
   @file schedule.c
@@ -26,8 +28,10 @@ int idComp(const void *aptr, const void *bptr)
   if (b == NULL) {
     return -1;
   }
-  char idA[4] = a->dept;
-  char idB[4] = b->dept;
+  char idA[4];
+  char idB[4];
+  strcpy(idA, a->dept);
+  strcpy(idB, b->dept);
 
 
   if (strcmp(idA, idB) < 0) {
@@ -65,13 +69,15 @@ int nameComp(const void *aptr, const void *bptr)
   if (b == NULL) {
     return -1;
   }
-  char *nameA = a->name;
-  char *nameB = b->name;
+  char nameA[31];
+  char nameB[31];
+  strcpy(nameA, a->name);
+  strcpy(nameB, b->name);
 
   if (strcmp(nameA, nameB) < 0) {
     return -1;
   }
-  else if (strcmp(idA, idB) > 0) {
+  else if (strcmp(nameA, nameB) > 0) {
     return 1;
   }
   else {
@@ -95,8 +101,10 @@ int scheduleComp(const void *aptr, const void *bptr)
   if (b == NULL) {
     return -1;
   }
-  char *daysA = a->days;
-  char *daysB = b->days;
+  char daysA[3];
+  char daysB[3];
+  strcpy(daysA, a->days);
+  strcpy(daysB, b->days);
 
   if (strcmp(daysA, daysB) < 0) {
     return -1;
@@ -107,8 +115,8 @@ int scheduleComp(const void *aptr, const void *bptr)
   else {
     int timeA;
     int timeB;
-    sscanf(a->time, "%d:", timeA);
-    sscanf(b->time, "%d:", timeB);
+    sscanf(a->time, "%d:", &timeA);
+    sscanf(b->time, "%d:", &timeB);
     //If the time is in the afternoon, convert to military time.
     if (timeA < 5) {
       timeA += 12;
@@ -164,15 +172,15 @@ int main(int argc, char *argv[])
     exit(1);
   }
   Catalog *catalog = makeCatalog();
+  Catalog *schedule = makeCatalog();
   for (int i = 1; i < argc; i++) {
     readCourses(argv[i], catalog);
   }
+
   bool quit = false;
   while (!quit) {
     printf("cmd> ");
-    //Initialize schedule
-    Course *schedule[10] = makeCatalog();
-    int schedSize = 0;
+    // int schedSize = 0;
 
     //Get first part of the command.
     char *command = readLine(stdin);
@@ -222,10 +230,10 @@ int main(int argc, char *argv[])
       else if (secondMatches && strcmp(second, "timeslot") == 0) {
         char third[strlen(command)]; //Contains days
         char fourth[strlen(command)]; //Contains time
-        int thirdMatches = sscanf(command + pos, "%s %s", third, fourth);
-        if (strcmp(third, "MW") != 0 && strcmp(third, "TH") != 0
-            || strcmp(time, "8:30") != 0 && strcmp(time, "10:00") != 0 && strcmp(time, "11:30") != 0 
-            && strcmp(time, "1:00") != 0 && strcmp(time, "2:30") != 0 && strcmp(time, "4:00") != 0) {
+        sscanf(command + pos, "%s %s", third, fourth);
+        if ((strcmp(third, "MW") != 0 && strcmp(third, "TH") != 0)
+            || (strcmp(fourth, "8:30") != 0 && strcmp(fourth, "10:00") != 0 && strcmp(fourth, "11:30") != 0 
+            && strcmp(fourth, "1:00") != 0 && strcmp(fourth, "2:30") != 0 && strcmp(fourth, "4:00") != 0)) {
           
           printf("Invalid command\n");
         }
@@ -242,7 +250,7 @@ int main(int argc, char *argv[])
         //First sort the courses
         sortCourses(catalog, scheduleComp);
         //Print all courses in schedule
-        listCourses(schedule, list, NULL, NULL);
+        listCourses(schedule, listTest, NULL, NULL);
       }
 
       //If the command is anything else after "list"
@@ -258,7 +266,7 @@ int main(int argc, char *argv[])
       if (!(schedule->capacity == schedule->count)) {
         char dept[strlen(command)]; //the department to add
         int number; //the number to add
-        int secondMatches = sscanf(command + pos, "%s %d", dept, number);
+        sscanf(command + pos, "%s %d", dept, &number);
         bool found = false;
         //Loop through the catalog to find the requested course
         for (int i = 0; i < catalog->count; i++) {
@@ -275,7 +283,7 @@ int main(int argc, char *argv[])
             }
             //If no duplicates were found, we are good to add it.
             if (!invalid) {
-              schedule->list[count] = catalog->list[i];
+              schedule->list[schedule->count] = catalog->list[i];
               schedule->count += 1;
               found = true;
             }
@@ -295,26 +303,26 @@ int main(int argc, char *argv[])
     else if (matches && strcmp(first, "drop")) {
       char dept[strlen(command)]; //the department to add
       int number; //the number to add
-      int secondMatches = sscanf(command + pos, "%s %d", dept, number);
+      sscanf(command + pos, "%s %d", dept, &number);
 
       bool found = false;
-      for (int j = 0; j < schedule->count; j++) {
+      for (int i = 0; i < schedule->count; i++) {
         //If the current course in the schedule equals the target course, remove it
-        if (idComp(schedule->list[j], catalog->list[i])) {
-          schedule[j] = NULL;
+        if (strcmp(schedule->list[i]->dept, dept) == 0 && schedule->list[i]->number == number) {
+          schedule->list[i] = NULL;
           schedule->count -= 1;
           found = true;
           sortCourses(schedule, scheduleComp);
         }
       }
       if (!found) {
-        prinf("Invalid command\n");
+        printf("Invalid command\n");
       }
     }
 
 
     //If the command is NULL (we reached EOF) or is "quit" then we quit
-    else if (command == NULL || matches && strcmp(second, "quit") == 0) {
+    else if (command == NULL || strcmp(first, "quit") == 0) {
       quit = true;
     }
 
