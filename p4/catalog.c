@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
+/**
+  Struct for Course objects. Contains dept, number, days, time, and name of the course
+*/
 struct CourseStruct
 {
   char dept[4];
@@ -10,16 +10,24 @@ struct CourseStruct
   char time[6];
   char name[31];
 };
-typedef struct CourseStruct Course;
+// typedef struct CourseStruct Course;
 
+/**
+  Struct for Catalog objects. Note: Catalog can be used for schedules too.
+  Contains a list of Course pointers, as well as the number and capacity of the catalog
+*/
 struct CatalogStruct
 {
   Course **list;
   int count;
   int capacity;
 };
-typedef struct CatalogStruct Catalog;
+// typedef struct CatalogStruct Catalog;
 
+/**
+  Creates a new catalog and returns it
+  @return the new catalog
+*/
 Catalog *makeCatalog()
 {
   Catalog *catalog = (Catalog *)malloc(sizeof(Catalog));
@@ -30,6 +38,10 @@ Catalog *makeCatalog()
   return catalog;
 }
 
+/**
+  Frees a catalog, including it's courses, the list containing the courses, and itself
+  @param catalog the catalog to be freed
+*/
 void freeCatalog(Catalog *catalog) 
 {
   int listSize = catalog->count;
@@ -40,11 +52,20 @@ void freeCatalog(Catalog *catalog)
   free(catalog); //Free the catalog
 }
 
+/**
+  Reads a file and parses it for Courses
+  @param filename the name of the file where the Courses are stored
+  @param catalog the catalog to store the courses into
+*/
 void readCourses(char const *filename, Catalog *catalog) 
 {
   FILE *fp = fopen(filename, "r");
+  if (fp == NULL) {
+    fprintf(stderr, "Can't open file: %s", filename);
+    exit(1);
+  }
   char *line;
-  while (line = readLine(fp)) {
+  while (line = readLine(fp)) { //May need to free line on each pass
     char dept[4];
     int number;
     char days[3];
@@ -92,62 +113,29 @@ void readCourses(char const *filename, Catalog *catalog)
       exit(1);
     }
   }
-}
-int idComp(const void *aptr, const void *bptr)
-{
-  Course const *a = aptr;
-  Course const *b = bptr;
-
-  char idA[4] = a->dept;
-  char idB[4] = b->dept;
-
-
-
-  if (strcmp(idA, idB) < 0) {
-    return -1;
-  }
-  else if (strcmp(idA, idB) == 0) {
-    if (a->number < b->number) {
-      return -1;
-    }
-    else if (a-> number > b->number) {
-      return 1;
-    }
-    else {
-      return 0;
-    }
-  }
-  else {
-    return 1;
-  }
-
-}
-int nameComp(const void *aptr, const void *bptr)
-{
-  Course const *a = aptr;
-  Course const *b = bptr;
-
-  char *nameA = a->name;
-  char *nameB = b->name;
-
-  if (strcmp(nameA, nameB) < 0) {
-    return -1;
-  }
-  else if (strcmp(idA, idB) > 0) {
-    return 1;
-  }
-  else {
-    return idComp(aptr, bptr);
-  }
+  free(fp);
 }
 
+/**
+  Sorts the courses using qsort and the given function parameter as a rule
+  @param catalog the catalog where the courses are
+  @param compare the function to be used to compare courses
+*/
 void sortCourses(Catalog *catalog, int (* compare) (void const *va, void const *vb))
 {
   qsort(catalog->list, catalog->count, sizeof(Course *), compare);
 }
 
+/**
+  Lists the courses according to the given function parameter and strings as a rule
+  @param catalog the catalog containing the courses
+  @param test the function pointer that will tell if the course should be printed or not.
+  @param str1 the first string to be used in test
+  @param str2 the second string to be used in test.
+  */
 void listCourses(Catalog *catalog, bool (*test) (Course const *course, char const *str1, char const *str2), char const *str1, char const *str2)
 {
+  printf("Course  Name                           Timeslot\n");
   for (int i = 0; i < catalog->count; i++) {
     if (test(catalog->list[i], str1, str2)) {
       char *dept = (catalog->list[i])->dept;
@@ -155,7 +143,7 @@ void listCourses(Catalog *catalog, bool (*test) (Course const *course, char cons
       char *days = (catalog->list[i])->days;
       char *time = (catalog->list[i])->time;
       char *name = (catalog->list[i])->name;
-      printf("%s %d %-30s %s %5s", dept, number, name, days, time);
+      printf("%s %d %-30s %s %5s\n", dept, number, name, days, time);
     }
   }
 }

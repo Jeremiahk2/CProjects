@@ -1,7 +1,10 @@
 
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
+/**
+  @file input.c
+  @author Jeremiah Knizley
+  File responsible for reading input for the schedule program.
+  Contains a method to read a line of a file 
+*/
 
 /**
   reads the next line from the input. 
