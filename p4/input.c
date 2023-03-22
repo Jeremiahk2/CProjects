@@ -45,6 +45,7 @@ char *readLine(FILE *fp)
     }
   }
   if (lineLength == 0 && endOfFile) {
+    free(line);
     return NULL;
   }
   else {
