@@ -1,15 +1,25 @@
 #include "catalog.h"
+
+/**
+  @file catalog.c
+  @author Jeremiah Knizley
+  Contains methods necessary for handling the Catalog struct.
+  It creates the catalog, frees the catalog, reads courses into the catalog,
+  sorts the list of courses in the catalog, and lists the courses in the catalog.
+*/
+
 /**
   Creates a new catalog and returns it
+  Dynamically allocates the list of courses (resizable) and the catalog itself
   @return the new catalog
 */
 Catalog *makeCatalog()
 {
   Catalog *catalog = (Catalog *)malloc(sizeof(Catalog));
   //Allocate room for the list of course pointers
-  catalog->list = (Course **)malloc(5 * sizeof(Course *));
+  catalog->list = (Course **)malloc(INITIAL_CAT_CAPACITY * sizeof(Course *));
   catalog->count = 0;
-  catalog->capacity = 5;
+  catalog->capacity = INITIAL_CAT_CAPACITY;
   return catalog;
 }
 
@@ -41,41 +51,48 @@ void readCourses(char const *filename, Catalog *catalog)
     exit(1);
   }
   bool end = false;
-  while ( !end ) { //May need to free line on each pass
+  while ( !end ) { 
 
     char *reading = readLine(fp);
     if (reading != NULL) {
+      //Shift around memory to static line since we don't need any resizes.
       char line[strlen(reading) + 1];
       strcpy(line, reading);
       free(reading);
 
-      char dept[4];
+      char dept[DEPT_LEN + 1];
       int number = 0;
-      char tempNumber[4];
-      char days[3];
-      char time[6];
-      char name[31];
-      char extra[2];
+      char tempNumber[NUM_LEN + 1];
+      char days[DAYS_LEN + 1];
+      char time[MAX_TIME_LEN + 1];
+      char name[NAME_LEN + 1];
+      //This is for any extra string that is found after the name string.
+      //So we can check if anything is in it and report a fail if there is.
+      char extra[EXTRA];
       int matches = sscanf(line, " %[A-Z] %[0-9] %s %s %30[A-Za-z 0-9] %1s", dept, tempNumber, days, time, name, extra);
-
-      if (matches != 5 || (strlen(dept) != 3)) {
+      //We only want 5 matches. Any less means missing info. Any more means extra info.
+      //Also the length of dept needs to be correct
+      if (matches != NUM_FIELDS || (strlen(dept) != DEPT_LEN)) {
         fprintf(stderr, "Invalid course file: %s\n", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
-      if (strlen(tempNumber) != 3) {
+      //If the length of the number string isn't 3, fail.
+      if (strlen(tempNumber) != NUM_LEN) {
         fprintf(stderr, "Invalid course file: %s\n", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
+      //Don't need a length comparison since all days can be is "MW" or "TH"
       if ((strcmp(days, "MW") != 0) && (strcmp(days, "TH") != 0)) {
         fprintf(stderr, "Invalid course file: %s\n", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
+      //Need to explicitly check for correct times.
       if ((strcmp(time, "8:30") != 0) && (strcmp(time, "10:00") != 0) && (strcmp(time, "11:30") != 0)
         && (strcmp(time, "1:00") != 0) && (strcmp(time, "2:30") != 0) && (strcmp(time, "4:00") != 0)) {
         fclose(fp);
@@ -83,14 +100,16 @@ void readCourses(char const *filename, Catalog *catalog)
         fprintf(stderr, "Invalid course file: %s\n", filename);
         exit(1);
       }
-      //Put number into an int for Course struct
+      //Put number into an int for Course struct. We know it matches an int so no need to check this.
       number = atoi(tempNumber);
       //All checks completed except checking if course and dept names are the same as another course
 
+      //If we're at capacity, increase capacity of the list by 2
       if (catalog->count == catalog->capacity) {
-        catalog->list = (Course **)realloc(catalog->list, catalog->capacity * 2 * sizeof(Course *));
-        catalog->capacity *= 2;
+        catalog->list = (Course **)realloc(catalog->list, catalog->capacity * CAT_INC * sizeof(Course *));
+        catalog->capacity *= CAT_INC;
       }
+      //Create the course
       Course course = {};
       strcpy(course.dept, dept);
       course.number = number;
@@ -98,6 +117,7 @@ void readCourses(char const *filename, Catalog *catalog)
       strcpy(course.time, time);
       strcpy(course.name, name);
 
+      //Put it in a pointer to a course, put it in the catalog
       Course *coursePointer = (Course *)malloc(sizeof(Course));
       *coursePointer = course;
       catalog->list[catalog->count] = coursePointer;
@@ -141,6 +161,7 @@ void listCourses(Catalog *catalog, bool (*test) (Course const *course, char cons
 {
   printf("Course  Name                           Timeslot\n");
   for (int i = 0; i < catalog->count; i++) {
+    //If the test string says the course is the one we want, print it.
     if (test(catalog->list[i], str1, str2)) {
       char *dept = (catalog->list[i])->dept;
       int number = (catalog->list[i])->number;

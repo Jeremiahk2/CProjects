@@ -5,6 +5,13 @@
 #include "catalog.h"
 #include "input.h"
 
+/** Number needed to change to military time */
+#define MIL_TIME_CONV 12
+/** Upper bound on the time that can be used in Course (PM)*/
+#define TIME_UP_BND 5
+/** capacity for the list of courses in a schedule */
+#define SCHED_CAP 10
+
 /**
   @file schedule.c
   @author Jeremiah Knizley
@@ -22,14 +29,16 @@ static int idComp(const void *aptr, const void *bptr)
 {
   Course const *a = *((Course **)aptr);
   Course const *b = *((Course **)bptr);
+  //If one of them is null, we want it to go after the non-null one. If
+  //With our implementation, both being NULL should be impossible.
   if (a == NULL) {
     return 1;
   }
   if (b == NULL) {
     return -1;
   }
-  char idA[4];
-  char idB[4];
+  char idA[DEPT_LEN + 1];
+  char idB[DEPT_LEN + 1];
   strcpy(idA, a->dept);
   strcpy(idB, b->dept);
 
@@ -69,8 +78,8 @@ static int nameComp(const void *aptr, const void *bptr)
   if (b == NULL) {
     return -1;
   }
-  char nameA[31];
-  char nameB[31];
+  char nameA[NAME_LEN + 1];
+  char nameB[NAME_LEN + 1];
   strcpy(nameA, a->name);
   strcpy(nameB, b->name);
 
@@ -80,6 +89,7 @@ static int nameComp(const void *aptr, const void *bptr)
   else if (strcmp(nameA, nameB) > 0) {
     return 1;
   }
+  //If they have the same name, fall back on ID comparison
   else {
     return idComp(aptr, bptr);
   }
@@ -101,8 +111,8 @@ static int scheduleComp(const void *aptr, const void *bptr)
   if (b == NULL) {
     return -1;
   }
-  char daysA[3];
-  char daysB[3];
+  char daysA[DAYS_LEN + 1];
+  char daysB[DAYS_LEN + 1];
   strcpy(daysA, a->days);
   strcpy(daysB, b->days);
 
@@ -118,11 +128,11 @@ static int scheduleComp(const void *aptr, const void *bptr)
     sscanf(a->time, "%d:", &timeA);
     sscanf(b->time, "%d:", &timeB);
     //If the time is in the afternoon, convert to military time.
-    if (timeA < 5) {
-      timeA += 12;
+    if (timeA < TIME_UP_BND) {
+      timeA += MIL_TIME_CONV;
     }
-    if (timeB < 5) {
-      timeB += 12;
+    if (timeB < TIME_UP_BND) {
+      timeB += MIL_TIME_CONV;
     }
     if (timeA < timeB) {
       return -1;
@@ -178,8 +188,8 @@ int main(int argc, char *argv[])
   //Making schedule a catalog too because it reduces redundancy by ALOT. Resizability isn't used after initial setup
   //So the only drawback is that the memory is a little bit more expensive. But trade-off wise it seems like the play.
   Catalog *schedule = makeCatalog();
-  schedule->list = (Course **)realloc(schedule->list, 10 * sizeof(Course *));
-  schedule->capacity = 10;
+  schedule->list = (Course **)realloc(schedule->list, SCHED_CAP * sizeof(Course *));
+  schedule->capacity = SCHED_CAP;
 
   bool quit = false;
   while (!quit) {
@@ -224,9 +234,9 @@ int main(int argc, char *argv[])
 
         //If the command is "list department <dept>"
         else if (secondMatches && (strcmp(second, "department") == 0)) {
-          char third[strlen(command)];
+          char third[strlen(command)]; //Department string, ex. "CSC"
           int thirdMatches = sscanf(command + pos, " %[A-Z]", third);
-          if (thirdMatches == 0 || strlen(third) != 3) {
+          if (thirdMatches == 0 || strlen(third) != DEPT_LEN) {
             printf("Invalid command\n\n");
           }
           else {

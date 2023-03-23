@@ -3,6 +3,24 @@
 #include <string.h>
 #include <stdbool.h>
 #include "input.h"
+/** Initial capacity of the Catalog list of courses */
+#define INITIAL_CAT_CAPACITY 5
+/** Initial length of the department string */
+#define DEPT_LEN 3
+/** Initial length of the number string */
+#define NUM_LEN 3
+/** Initial Length of the days string */
+#define DAYS_LEN 2
+/** Maximum length of the time string */
+#define MAX_TIME_LEN 5
+/** The length of the name string on a Course*/
+#define NAME_LEN 30
+/** This is only for one character and the null terminator read after "name" */
+#define EXTRA 2
+/** This is the number of fields in Course */
+#define NUM_FIELDS 5
+/** The multiplier to increment Catalog size by */
+#define CAT_INC 2
 
 /**
   @file catalog.h
@@ -11,11 +29,11 @@
 */
 
 typedef struct {
-  char dept[4];
+  char dept[DEPT_LEN + 1];
   int number;
-  char days[3];
-  char time[6];
-  char name[31];
+  char days[DAYS_LEN + 1];
+  char time[MAX_TIME_LEN + 1];
+  char name[NAME_LEN + 1];
 } Course;
 
 typedef struct {

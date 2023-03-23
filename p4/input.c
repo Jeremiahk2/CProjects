@@ -45,6 +45,7 @@ char *readLine(FILE *fp)
     }
   }
   if (lineLength == 0 && endOfFile) {
+    //Still need to free line for the one byte in it
     free(line);
     return NULL;
   }
