@@ -17,6 +17,8 @@
 #define NUM_DAYS 4
 /** The length of the string for the days in calendar, ex. "Mon", "Tue", etc.*/
 #define CAL_DAY_LEN 3
+/** The number of dayslots that can be had. There are two, "MW" and "TH" */
+#define NUM_DAYSLOTS 2
 
 /**
   @file schedule.c
@@ -378,7 +380,7 @@ int main(int argc, char *argv[])
             for (int k = 0; k < schedule->count; k++) {
               char curDays[DAYS_LEN + 1];
               //If the day is even (j is 0 or 2), it's monday and wednesday, if odd, tuesday and thursday.
-              if (j % 2 == 0) {
+              if (j % NUM_DAYSLOTS == 0) {
                 strcpy(curDays, "MW");
               }
               else {
