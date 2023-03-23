@@ -40,7 +40,7 @@ char *readLine(FILE *fp)
       //If we are out of memory.
       if (lineLength == memLength) {
         //Resize the line array. We want it to change our memlength, but keep lineLength the same.
-        line = realloc(line, memLength *= 2);
+        line = realloc(line, memLength *= LINE_INC);
       }
     }
   }
