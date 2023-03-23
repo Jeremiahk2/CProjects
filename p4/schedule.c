@@ -113,8 +113,8 @@ static int scheduleComp(const void *aptr, const void *bptr)
     return 1;
   }
   else {
-    int timeA;
-    int timeB;
+    int timeA = 0;
+    int timeB = 0;
     sscanf(a->time, "%d:", &timeA);
     sscanf(b->time, "%d:", &timeB);
     //If the time is in the afternoon, convert to military time.
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
   Catalog *schedule = makeCatalog();
   schedule->list = (Course **)realloc(schedule->list, 10 * sizeof(Course *));
   schedule->capacity = 10;
-  
+
   bool quit = false;
   while (!quit) {
     printf("cmd> ");
@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
       strcpy(command, temp);
       free(temp);
 
-      int pos;
+      int pos = 0;
       printf("%s\n", command);
       char first[strlen(command)];
       int matches = sscanf(command, "%s%n", first, &pos);
@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
         //If the schedule is already at capacity, we don't want to do any of this
         if (!(schedule->capacity == schedule->count)) {
           char dept[strlen(command)]; //the department to add
-          int number; //the number to add
+          int number = 0; //the number to add
           sscanf(command + pos, "%s %d", dept, &number);
           bool found = false;
           //Loop through the catalog to find the requested course
@@ -316,7 +316,7 @@ int main(int argc, char *argv[])
       //If the command is "drop <dept> <number>"
       else if (matches && (strcmp(first, "drop") == 0)) {
         char dept[strlen(command)]; //the department to add
-        int number; //the number to add
+        int number = 0; //the number to add
         sscanf(command + pos, "%s %d", dept, &number);
 
         bool found = false;

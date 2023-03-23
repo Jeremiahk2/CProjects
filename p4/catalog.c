@@ -50,7 +50,7 @@ void readCourses(char const *filename, Catalog *catalog)
       free(reading);
 
       char dept[4];
-      int number;
+      int number = 0;
       char tempNumber[4];
       char days[3];
       char time[6];
