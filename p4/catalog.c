@@ -36,7 +36,8 @@ void readCourses(char const *filename, Catalog *catalog)
 {
   FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
-    fprintf(stderr, "Can't open file: %s", filename);
+    fprintf(stderr, "Can't open file: %s\n", filename);
+    freeCatalog(catalog);
     exit(1);
   }
   bool end = false;
@@ -54,22 +55,23 @@ void readCourses(char const *filename, Catalog *catalog)
       char days[3];
       char time[6];
       char name[31];
-      int matches = sscanf(line, " %[A-Z] %[0-9] %s %s %[A-Za-z 0-9]", dept, tempNumber, days, time, name);
+      char extra[2];
+      int matches = sscanf(line, " %[A-Z] %[0-9] %s %s %30[A-Za-z 0-9] %1s", dept, tempNumber, days, time, name, extra);
 
       if (matches != 5 || (strlen(dept) != 3)) {
-        fprintf(stderr, "Invalid course file: %s", filename);
+        fprintf(stderr, "Invalid course file: %s\n", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
       if (strlen(tempNumber) != 3) {
-        fprintf(stderr, "Invalid course file: %s", filename);
+        fprintf(stderr, "Invalid course file: %s\n", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
       if ((strcmp(days, "MW") != 0) && (strcmp(days, "TH") != 0)) {
-        fprintf(stderr, "Invalid course file: %s", filename);
+        fprintf(stderr, "Invalid course file: %s\n", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
@@ -78,7 +80,7 @@ void readCourses(char const *filename, Catalog *catalog)
         && (strcmp(time, "1:00") != 0) && (strcmp(time, "2:30") != 0) && (strcmp(time, "4:00") != 0)) {
         fclose(fp);
         freeCatalog(catalog);
-        fprintf(stderr, "Invalid course file: %s", filename);
+        fprintf(stderr, "Invalid course file: %s\n", filename);
         exit(1);
       }
       //Put number into an int for Course struct
@@ -104,7 +106,7 @@ void readCourses(char const *filename, Catalog *catalog)
       for (int i = 0; i < catalog->count - 1; i++) {
         Course current = *(catalog->list[i]);
         if (strcmp(current.dept, dept) == 0 && current.number == number) {
-          fprintf(stderr, "Invalid course file: %s", filename);
+          fprintf(stderr, "Invalid course file: %s\n", filename);
           freeCatalog(catalog);
           fclose(fp);
           exit(1);

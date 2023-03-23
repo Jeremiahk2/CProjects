@@ -168,19 +168,19 @@ static bool listTest( const Course *course, const char *str1, const char *str2)
 int main(int argc, char *argv[]) 
 {
   if (argc == 1) {
-    fprintf(stderr, "usage: schedule <course-file>*");
+    fprintf(stderr, "usage: schedule <course-file>*\n");
     exit(1);
   }
   Catalog *catalog = makeCatalog();
+  for (int i = 1; i < argc; i++) {
+    readCourses(argv[i], catalog);
+  }
   //Making schedule a catalog too because it reduces redundancy by ALOT. Resizability isn't used after initial setup
   //So the only drawback is that the memory is a little bit more expensive. But trade-off wise it seems like the play.
   Catalog *schedule = makeCatalog();
   schedule->list = (Course **)realloc(schedule->list, 10 * sizeof(Course *));
   schedule->capacity = 10;
-  for (int i = 1; i < argc; i++) {
-    readCourses(argv[i], catalog);
-  }
-
+  
   bool quit = false;
   while (!quit) {
     printf("cmd> ");
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
           char third[strlen(command)];
           int thirdMatches = sscanf(command + pos, " %[A-Z]", third);
           if (thirdMatches == 0 || strlen(third) != 3) {
-            printf("Invalid command\n");
+            printf("Invalid command\n\n");
           }
           else {
             //First sort courses by ID
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
               || ((strcmp(fourth, "8:30") != 0) && (strcmp(fourth, "10:00") != 0) && (strcmp(fourth, "11:30") != 0) 
               && (strcmp(fourth, "1:00") != 0) && (strcmp(fourth, "2:30") != 0) && (strcmp(fourth, "4:00") != 0))) {
             
-            printf("Invalid command\n");
+            printf("Invalid command\n\n");
           }
           else {
             //First sort courses by ID
@@ -266,7 +266,7 @@ int main(int argc, char *argv[])
 
         //If the command is anything else after "list"
         else {
-          printf("Invalid command\n");
+          printf("Invalid command\n\n");
         }
       }
 
@@ -280,16 +280,17 @@ int main(int argc, char *argv[])
           sscanf(command + pos, "%s %d", dept, &number);
           bool found = false;
           //Loop through the catalog to find the requested course
+          bool invalid = false;
           for (int i = 0; i < catalog->count; i++) {
             //Test if this course is the one
             if (strcmp(catalog->list[i]->dept, dept) == 0 && catalog->list[i]->number == number) {
               //If it is the right one, run a test to see if it is already in the schedule, or if the timeslot is already taken.
-              bool invalid = false;
+              // bool invalid = false;
               for (int j = 0; j < schedule->count; j++) {
                 //If the current course in the schedule equals the target course, or if the current course has the same timeslot as the desired course.
                 if (((strcmp(schedule->list[j]->dept, catalog->list[i]->dept) == 0) && (schedule->list[j]->number == catalog->list[i]->number))
                     || ((strcmp(schedule->list[j]->time, catalog->list[i]->time) == 0) && (strcmp(schedule->list[j]->days, catalog->list[i]->days) == 0))) { //idComp(schedule->list[j], catalog->list[i]) || scheduleComp(schedule->list[i], catalog->list[j])) { //Problem here
-                  printf("Invalid command\n");
+                  printf("Invalid command\n\n");
                   invalid = true;
                 }
               }
@@ -302,13 +303,13 @@ int main(int argc, char *argv[])
               }
             }
           }
-          if (!found) {
-            printf("Invalid command\n");
+          if (!found && !invalid) {
+            printf("Invalid command\n\n");
           }
         }
         //Invalid if the schedule is at capacity
         else {
-          printf("Invalid command\n");
+          printf("Invalid command\n\n");
         }
       }
 
@@ -331,7 +332,7 @@ int main(int argc, char *argv[])
           }
         }
         if (!found) {
-          printf("Invalid command\n");
+          printf("Invalid command\n\n");
         }
       }
 
@@ -343,7 +344,7 @@ int main(int argc, char *argv[])
 
       //If the command is anything else, it's invalid
       else {
-        printf("Invalid command\n");
+        printf("Invalid command\n\n");
       }
     }
     else {
