@@ -50,35 +50,39 @@ void readCourses(char const *filename, Catalog *catalog)
 
       char dept[4];
       int number;
+      char tempNumber[4];
       char days[3];
       char time[6];
       char name[31];
-      int matches = sscanf(line, " %[A-Z] %d %s %s %[A-Za-z 0-9]", dept, &number, days, time, name);
-      if (matches != 5 || strlen(dept) != 3) {
+      int matches = sscanf(line, " %[A-Z] %[0-9] %s %s %[A-Za-z 0-9]", dept, tempNumber, days, time, name);
+
+      if (matches != 5 || (strlen(dept) != 3)) {
         fprintf(stderr, "Invalid course file: %s", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
-      if (number < 100 || number > 999) {
+      if (strlen(tempNumber) != 3) {
         fprintf(stderr, "Invalid course file: %s", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
-      if (strcmp(days, "MW") != 0 && strcmp(days, "TH") != 0) {
+      if ((strcmp(days, "MW") != 0) && (strcmp(days, "TH") != 0)) {
         fprintf(stderr, "Invalid course file: %s", filename);
         fclose(fp);
         freeCatalog(catalog);
         exit(1);
       }
-      if (strcmp(time, "8:30") != 0 && strcmp(time, "10:00") != 0 && strcmp(time, "11:30") != 0 
-        && strcmp(time, "1:00") != 0 && strcmp(time, "2:30") != 0 && strcmp(time, "4:00") != 0) {
+      if ((strcmp(time, "8:30") != 0) && (strcmp(time, "10:00") != 0) && (strcmp(time, "11:30") != 0)
+        && (strcmp(time, "1:00") != 0) && (strcmp(time, "2:30") != 0) && (strcmp(time, "4:00") != 0)) {
         fclose(fp);
         freeCatalog(catalog);
         fprintf(stderr, "Invalid course file: %s", filename);
         exit(1);
       }
+      //Put number into an int for Course struct
+      number = atoi(tempNumber);
       //All checks completed except checking if course and dept names are the same as another course
 
       if (catalog->count == catalog->capacity) {

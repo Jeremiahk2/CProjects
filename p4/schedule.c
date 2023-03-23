@@ -172,7 +172,11 @@ int main(int argc, char *argv[])
     exit(1);
   }
   Catalog *catalog = makeCatalog();
+  //Making schedule a catalog too because it reduces redundancy by ALOT. Resizability isn't used after initial setup
+  //So the only drawback is that the memory is a little bit more expensive. But trade-off wise it seems like the play.
   Catalog *schedule = makeCatalog();
+  schedule->list = (Course **)realloc(schedule->list, 10 * sizeof(Course *));
+  schedule->capacity = 10;
   for (int i = 1; i < argc; i++) {
     readCourses(argv[i], catalog);
   }
@@ -255,7 +259,7 @@ int main(int argc, char *argv[])
         //If the command is "list schedule"
         else if (secondMatches && (strcmp(second, "schedule") == 0)) {
           //First sort the courses
-          sortCourses(catalog, scheduleComp);
+          sortCourses(schedule, scheduleComp);
           //Print all courses in schedule
           listCourses(schedule, listTest, NULL, NULL);
         }
@@ -283,7 +287,8 @@ int main(int argc, char *argv[])
               bool invalid = false;
               for (int j = 0; j < schedule->count; j++) {
                 //If the current course in the schedule equals the target course, or if the current course has the same timeslot as the desired course.
-                if (idComp(schedule->list[j], catalog->list[i]) || scheduleComp(schedule->list[i], catalog->list[j])) {
+                if (((strcmp(schedule->list[j]->dept, catalog->list[i]->dept) == 0) && (schedule->list[j]->number == catalog->list[i]->number))
+                    || ((strcmp(schedule->list[j]->time, catalog->list[i]->time) == 0) && (strcmp(schedule->list[j]->days, catalog->list[i]->days) == 0))) { //idComp(schedule->list[j], catalog->list[i]) || scheduleComp(schedule->list[i], catalog->list[j])) { //Problem here
                   printf("Invalid command\n");
                   invalid = true;
                 }
@@ -292,6 +297,7 @@ int main(int argc, char *argv[])
               if (!invalid) {
                 schedule->list[schedule->count] = catalog->list[i];
                 schedule->count += 1;
+                printf("\n");
                 found = true;
               }
             }
@@ -315,11 +321,13 @@ int main(int argc, char *argv[])
         bool found = false;
         for (int i = 0; i < schedule->count; i++) {
           //If the current course in the schedule equals the target course, remove it
-          if (strcmp(schedule->list[i]->dept, dept) == 0 && schedule->list[i]->number == number) {
+          if ((strcmp(schedule->list[i]->dept, dept) == 0) && (schedule->list[i]->number == number)) {
             schedule->list[i] = NULL;
-            schedule->count -= 1;
+            // schedule->count -= 1;
             found = true;
             sortCourses(schedule, scheduleComp);
+            schedule->count -= 1;
+            printf("\n");
           }
         }
         if (!found) {
