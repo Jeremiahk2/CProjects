@@ -91,7 +91,7 @@ void readCourses(char const *filename, Catalog *catalog)
         catalog->list = (Course **)realloc(catalog->list, catalog->capacity * 2 * sizeof(Course *));
         catalog->capacity *= 2;
       }
-      Course course;
+      Course course = {};
       strcpy(course.dept, dept);
       course.number = number;
       strcpy(course.days, days);
