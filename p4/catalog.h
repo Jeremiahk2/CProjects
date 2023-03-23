@@ -25,7 +25,7 @@
 /**
   @file catalog.h
   @author Jeremiah Knizley
-  Header file for catalog.c contains all methods and structs
+  Header file for catalog.c contains all methods and structs (and typedefs)
 */
 
 typedef struct {

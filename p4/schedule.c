@@ -11,12 +11,18 @@
 #define TIME_UP_BND 5
 /** capacity for the list of courses in a schedule */
 #define SCHED_CAP 10
+/** The number of times possible */
+#define NUM_TIMES 6
+/** The number of days a course can be held */
+#define NUM_DAYS 4
+/** The length of the string for the days in calendar, ex. "Mon", "Tue", etc.*/
+#define CAL_DAY_LEN 3
 
 /**
   @file schedule.c
   @author Jeremiah Knizley
   This file maintains a schedule of courses. Users can load course catalogs in and then add courses
-  to their schedule and view them as they wish.
+  to their schedule and view them as they wish. They can also load a calendar visualization for their schedule
 */
 
 /**
@@ -345,8 +351,55 @@ int main(int argc, char *argv[])
           printf("Invalid command\n\n");
         }
       }
+      //If the command is "list calendar" for extra credit
+      else if (matches && (strcmp(first, "calendar") == 0)) {
+        //Need an array for automated looping
+        char timeStrings[NUM_TIMES][MAX_TIME_LEN + 1] = {
+          "8:30", 
+          "10:00",
+          "11:30",
+          "1:00",
+          "2:30",
+          "4:00"
+        };
+        //Print header
+        printf("%12s%9s%9s%9s\n", "Mon", "Tue", "Wed", "Thu");
 
-
+        //Loop through the rows (the 6 different times)
+        for (int i = 0; i < NUM_TIMES; i++) {
+          //Print the time string
+          printf("%5s", *(timeStrings + i));
+          //Loop through the columns (the 4 different days)
+          for (int j = 0; j < NUM_DAYS; j++) {
+            bool found = false;
+            //Header space
+            printf("  ");
+            //Loop through the schedule to see if we have one that has the same time and day.
+            for (int k = 0; k < schedule->count; k++) {
+              char curDays[DAYS_LEN + 1];
+              //If the day is even (j is 0 or 2), it's monday and wednesday, if odd, tuesday and thursday.
+              if (j % 2 == 0) {
+                strcpy(curDays, "MW");
+              }
+              else {
+                strcpy(curDays, "TH");
+              }
+              if (strcmp(schedule->list[k]->days, curDays) == 0 && strcmp(schedule->list[k]->time, *(timeStrings + i)) == 0) {
+                printf("%s %d", schedule->list[k]->dept, schedule->list[k]->number);
+                found = true;
+              }
+            }
+            //If we didn't find one, just print seven spaces as placeholder
+            if (!found) {
+              printf("       ");
+            }
+          }
+          //Print a new line after each row
+          printf("\n");
+        }
+        //Print a new line after the whole calendar
+        printf("\n");
+      }
       //If the command is NULL (we reached EOF) or is "quit" then we quit
       else if (command == NULL || strcmp(first, "quit") == 0) {
         quit = true;
