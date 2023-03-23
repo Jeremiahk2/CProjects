@@ -1,11 +1,17 @@
 CC = gcc
-CFLAGS = -Wall -std=c99 -g
+CFLAGS = -Wall -std=c99 -g cppcheck
 
 schedule: schedule.o catalog.o input.o
+	gcc -Wall -std=c99 schedule.o catalog.o input.o -o schedule
 
-schedule.o: catalog.h input.h schedule.c
+schedule.o: schedule.c catalog.h input.h
+	gcc -Wall -std=c99 -g schedule.c -c
+
 catalog.o: catalog.c catalog.h input.h
+	gcc -Wall -std=c99 -g catalog.c -c
+
 input.o: input.c input.h
+	gcc -Wall -std=c99 -g input.c -c
 
 clean:
 	rm -f schedule.o
