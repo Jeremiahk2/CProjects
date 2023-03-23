@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
     //Get first part of the command.
     char *temp = readLine(stdin);
     if (temp != NULL) {
-      char command[strlen(temp)];
+      char command[strlen(temp) + 1];
       strcpy(command, temp);
       free(temp);
 

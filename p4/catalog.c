@@ -45,7 +45,7 @@ void readCourses(char const *filename, Catalog *catalog)
 
     char *reading = readLine(fp);
     if (reading != NULL) {
-      char line[strlen(reading)];
+      char line[strlen(reading) + 1];
       strcpy(line, reading);
       free(reading);
 

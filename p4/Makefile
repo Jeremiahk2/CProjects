@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -std=c99 -g cppcheck
+CFLAGS = -Wall -std=c99 -g
 
 schedule: schedule.o catalog.o input.o
 	gcc -Wall -std=c99 schedule.o catalog.o input.o -o schedule
