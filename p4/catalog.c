@@ -8,11 +8,7 @@
   sorts the list of courses in the catalog, and lists the courses in the catalog.
 */
 
-/**
-  Creates a new catalog and returns it
-  Dynamically allocates the list of courses (resizable) and the catalog itself
-  @return the new catalog
-*/
+
 Catalog *makeCatalog()
 {
   Catalog *catalog = (Catalog *)malloc(sizeof(Catalog));
@@ -23,10 +19,7 @@ Catalog *makeCatalog()
   return catalog;
 }
 
-/**
-  Frees a catalog, including it's courses, the list containing the courses, and itself
-  @param catalog the catalog to be freed
-*/
+
 void freeCatalog(Catalog *catalog) 
 {
   int listSize = catalog->count;
@@ -37,11 +30,6 @@ void freeCatalog(Catalog *catalog)
   free(catalog); //Free the catalog
 }
 
-/**
-  Reads a file and parses it for Courses
-  @param filename the name of the file where the Courses are stored
-  @param catalog the catalog to store the courses into
-*/
 void readCourses(char const *filename, Catalog *catalog) 
 {
   FILE *fp = fopen(filename, "r");
@@ -140,23 +128,11 @@ void readCourses(char const *filename, Catalog *catalog)
   fclose(fp);
 }
 
-/**
-  Sorts the courses using qsort and the given function parameter as a rule
-  @param catalog the catalog where the courses are
-  @param compare the function to be used to compare courses
-*/
 void sortCourses(Catalog *catalog, int (* compare) (void const *va, void const *vb))
 {
   qsort(catalog->list, catalog->count, sizeof(catalog->list[0]), compare);
 }
 
-/**
-  Lists the courses according to the given function parameter and strings as a rule
-  @param catalog the catalog containing the courses
-  @param test the function pointer that will tell if the course should be printed or not.
-  @param str1 the first string to be used in test
-  @param str2 the second string to be used in test.
-  */
 void listCourses(Catalog *catalog, bool (*test) (Course const *course, char const *str1, char const *str2), char const *str1, char const *str2)
 {
   printf("Course  Name                           Timeslot\n");

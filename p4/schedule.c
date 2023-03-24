@@ -202,7 +202,6 @@ int main(int argc, char *argv[])
   bool quit = false;
   while (!quit) {
     printf("cmd> ");
-    // int schedSize = 0;
 
     //Get first part of the command.
     char *temp = readLine(stdin);
@@ -342,7 +341,6 @@ int main(int argc, char *argv[])
           //If the current course in the schedule equals the target course, remove it
           if ((strcmp(schedule->list[i]->dept, dept) == 0) && (schedule->list[i]->number == number)) {
             schedule->list[i] = NULL;
-            // schedule->count -= 1;
             found = true;
             sortCourses(schedule, scheduleComp);
             schedule->count -= 1;
@@ -418,7 +416,6 @@ int main(int argc, char *argv[])
     }
   }
   freeCatalog(catalog);
-  // freeCatalog(schedule);
   free(schedule->list);
   free(schedule);
 

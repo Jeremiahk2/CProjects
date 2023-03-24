@@ -6,12 +6,7 @@
   Contains a method to read a line of a file 
 */
 
-/**
-  reads the next line from the input. 
-  Afterwards, the fp paramater will have progressed past a newline character (if it didn't find EOF)
-  @param fp the file to read a line from.
-  @return a pointer to the array containing the line, or NULL if it found EOF instantly.
-  */
+
 char *readLine(FILE *fp)
 {
   //Initialize bool values that will control when the loop will end.
