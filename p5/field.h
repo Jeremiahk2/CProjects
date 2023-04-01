@@ -10,4 +10,10 @@ typedef unsigned char byte;
 /** Number of bits in a byte. */
 #define BBITS 8
 
+byte fieldAdd(byte a, byte b);
+
+byte fieldSub(byte a, byte b);
+
+byte fieldMul(byte a, byte b);
+
 #endif

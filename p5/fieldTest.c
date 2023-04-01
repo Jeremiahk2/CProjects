@@ -35,7 +35,7 @@ int main()
   // down past the blocks of code below.  That will enable tests of
   // various functions you're expected to implement.
   
-#ifdef DISABLE_TESTS
+  // #ifdef DISABLE_TESTS
 
   ////////////////////////////////////////////////////////////////////////
   // Test fieldAdd()
@@ -47,7 +47,7 @@ int main()
     c = fieldAdd( 0xF0, 0x0F );
     TestCase( c == 0xFF );
   }
-  
+  // #ifdef DISABLE_TESTS
   ////////////////////////////////////////////////////////////////////////
   // Test fieldSub()
 
@@ -58,7 +58,7 @@ int main()
     c = fieldSub( 0xA9, 0x47 );
     TestCase( c == 0xEE );
   }
-  
+  // #ifdef DISABLE_TESTS
   ////////////////////////////////////////////////////////////////////////
   // Test fieldMul()
 
@@ -82,6 +82,7 @@ int main()
     TestCase( c == 0xF3 );
   }
 
+  #ifdef DISABLE_TESTS
   // Once you move the #ifdef DISABLE_TESTS to here, you've enabled
   // all the tests.
 
