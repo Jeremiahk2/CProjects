@@ -1,0 +1,4 @@
+This is a short text message.  It's not a
+multiple of 16 bytes in length, so it
+should get some padding with zero bytes
+before it gets encrypted.

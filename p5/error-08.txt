@@ -1,0 +1,1 @@
+usage: encrypt <key-file> <input-file> <output-file>
