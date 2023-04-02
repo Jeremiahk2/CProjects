@@ -7,8 +7,6 @@
 */
 
 #include "field.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 byte fieldAdd(byte a, byte b)
 {
