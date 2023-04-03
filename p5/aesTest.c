@@ -36,7 +36,7 @@ int main()
   // down past the blocks of code below.  That will enable tests of
   // various functions you're expected to implement.
   
-#ifdef DISABLE_TESTS
+// #ifdef DISABLE_TESTS
     
   ////////////////////////////////////////////////////////////////////////
   // Test gFunction()
@@ -53,7 +53,7 @@ int main()
     byte expected[ WORD_SIZE ] = { 0x58, 0xFF, 0x7F, 0xAD };
     TestCase( memcmp( dest, expected, WORD_SIZE ) == 0 );
   }
-
+// #ifdef DISABLE_TESTS 
   // Another gFunction test.
 
   {
@@ -68,7 +68,7 @@ int main()
     byte expected[ WORD_SIZE ] = { 0x09, 0x1D, 0x01, 0xF3 };
     TestCase( memcmp( dest, expected, WORD_SIZE ) == 0 );
   }
-  
+  // #ifdef DISABLE_TESTS 
   // One more gFunction test.
 
   {
@@ -83,7 +83,7 @@ int main()
     byte expected[ WORD_SIZE ] = { 0x24, 0xC3, 0x53, 0x27 };
     TestCase( memcmp( dest, expected, WORD_SIZE ) == 0 );
   }
-
+  // #ifdef DISABLE_TESTS 
   ////////////////////////////////////////////////////////////////////////
   // Test generateSubkeys();
   
@@ -123,10 +123,10 @@ int main()
         0x4A, 0x25, 0x41, 0x1F, 0xBD, 0xB3, 0xFC, 0x0E }
     };
     
-    for ( int r = 0; r <= ROUNDS; r++ )
+    for ( int r = 0; r <= ROUNDS; r++ ) {
       TestCase( memcmp( subkey[ r ], expected[ r ], BLOCK_SIZE ) == 0 );
+    }
   }
-
   ////////////////////////////////////////////////////////////////////////
   // Test addSubkey()
   
@@ -150,7 +150,7 @@ int main()
       0xB3, 0x9C, 0xC3, 0x6A, 0xC5, 0xC9, 0x00, 0x9F };
     TestCase( memcmp( data, expected, BLOCK_SIZE ) == 0 );
   }
-
+// #ifdef DISABLE_TESTS 
   ////////////////////////////////////////////////////////////////////////
   // Test blockToSquare()
   
@@ -172,7 +172,7 @@ int main()
     for ( int r = 0; r < BLOCK_ROWS; r++ )
       TestCase( memcmp( square[ r ], expected[ r ], BLOCK_COLS ) == 0 );
   }
-
+  // #ifdef DISABLE_TESTS 
   ////////////////////////////////////////////////////////////////////////
   // Test squareToBlock()
   
@@ -193,7 +193,7 @@ int main()
     
     TestCase( memcmp( block, expected, BLOCK_SIZE ) == 0 );
   }
-
+  // #ifdef DISABLE_TESTS 
   ////////////////////////////////////////////////////////////////////////
   // Test shiftRows()
   
@@ -213,7 +213,7 @@ int main()
     for ( int r = 0; r < BLOCK_ROWS; r++ )
       TestCase( memcmp( square[ r ], expected[ r ], BLOCK_COLS ) == 0 );
   }
-
+  // #ifdef DISABLE_TESTS 
   ////////////////////////////////////////////////////////////////////////
   // Test unShiftRows()
   
@@ -233,7 +233,7 @@ int main()
     for ( int r = 0; r < BLOCK_ROWS; r++ )
       TestCase( memcmp( square[ r ], expected[ r ], BLOCK_COLS ) == 0 );
   }
-
+#ifdef DISABLE_TESTS 
   ////////////////////////////////////////////////////////////////////////
   // Test mixColumns()
   

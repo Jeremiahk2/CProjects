@@ -21,4 +21,18 @@
 /** Number of roudns for 128-bit AES. */
 #define ROUNDS 10
 
+
+void addSubkey(byte data[BLOCK_SIZE], byte const key[BLOCK_SIZE]);
+
+void gFunction( byte dest[ WORD_SIZE ], byte const src[ WORD_SIZE ], int r );
+
+void generateSubkeys(byte subkey[ROUNDS + 1][BLOCK_SIZE], byte const key[BLOCK_SIZE]);
+
+void blockToSquare(byte square[BLOCK_ROWS][BLOCK_COLS], byte const data[BLOCK_SIZE]);
+
+void squareToBlock(byte data[BLOCK_SIZE], byte const square[BLOCK_ROWS][BLOCK_COLS]);
+
+void shiftRows(byte square[BLOCK_ROWS][BLOCK_COLS]);
+
+void unShiftRows(byte square[BLOCK_ROWS][BLOCK_COLS]);
 #endif

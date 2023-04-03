@@ -5,6 +5,9 @@
   Contains all methods
   */
 
+#ifndef _IO_H_
+#define _IO_H
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -24,3 +27,5 @@ byte *readBinaryFile(char const *filename, int *size);
   @param size the size of the data array
 */
 void writeBinaryFile(char const *filename, byte *data, int size);
+
+#endif

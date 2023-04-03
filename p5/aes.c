@@ -106,8 +106,114 @@ void gFunction( byte dest[ WORD_SIZE ], byte const src[ WORD_SIZE ], int r )
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
   };
 
-  // ...
+  dest[3] = substBox(src[0]);
+  dest[2] = substBox(src[3]);
+  dest[1] = substBox(src[2]);
+  dest[0] = substBox(src[1]) ^ roundConstant[r];
 }  
+
+void addSubkey(byte data[BLOCK_SIZE], byte const key[BLOCK_SIZE])
+{
+  for (int i = 0; i < BLOCK_SIZE; i++) {
+    data[i] = fieldAdd(data[i], key[i]);
+  }
+}
+
+void generateSubkeys(byte subkey[ROUNDS + 1][BLOCK_SIZE], byte const key[BLOCK_SIZE])
+{
+  //Load the key into a word array.
+  byte words[BLOCK_ROWS][WORD_SIZE];
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < WORD_SIZE; j++) {
+      words[i][j] = key[i * WORD_SIZE + j];
+    }
+  }
+  //Initialze subkey to have all 0's in case it doesn't already.
+  for (int i = 0; i < ROUNDS + 1; i++) {
+    for (int j = 0; j < BLOCK_SIZE; j++) {
+      subkey[i][j] = 0;
+    }
+  }
+  //Add the first subkey
+  addSubkey(*subkey, key);
+  //Add the rest of the subkeys.
+  for (int i = 1; i < ROUNDS + 1; i++) {
+    for (int j = 0; j < BLOCK_ROWS; j++) {
+      byte tempWord[WORD_SIZE];
+      //If we are on the first word, do the gfunction.
+      if (j == 0) {
+        gFunction(tempWord, words[3], i);
+        //Do exclusive OR w/ gfunction
+        for (int k = 0; k < WORD_SIZE; k++) {
+          words[j][k] = fieldAdd(words[j][k], tempWord[k]);
+        }
+      }
+      else {
+        //Do exclusive OR w/o gfunction
+        for (int k = 0; k < WORD_SIZE; k++) {
+          words[j][k] = fieldAdd(words[j][k], words[j - 1][k]);
+        }
+      }
+    }
+    //Store all the stuff in a temporary key, so that it can be added using addSubKey.
+    //Not sure why I can't just put this into subkey itself, but the instructions say to use addSubKey, so here we are.
+    byte tempKey[BLOCK_SIZE];
+    for (int j = 0; j < WORD_SIZE; j++) {
+        for (int k = 0; k < WORD_SIZE; k++) {
+          tempKey[j * WORD_SIZE + k] = words[j][k];
+        }
+    }
+    addSubkey(subkey[i], tempKey);
+  }
+}
+
+void blockToSquare(byte square[BLOCK_ROWS][BLOCK_COLS], byte const data[BLOCK_SIZE])
+{
+  for (int i = 0; i < BLOCK_COLS; i++) {
+    for (int j = 0; j < BLOCK_ROWS; j++) {
+      square[j][i] = data[i * BLOCK_ROWS + j];
+    }
+  }
+}
+
+void squareToBlock(byte data[BLOCK_SIZE], byte const square[BLOCK_ROWS][BLOCK_COLS])
+{
+  for (int i = 0; i < BLOCK_COLS; i++) {
+    for (int j = 0; j < BLOCK_ROWS; j++) {
+      data[i * BLOCK_ROWS + j] = square[j][i];
+    }
+  }
+}
+
+void shiftRows(byte square[BLOCK_ROWS][BLOCK_COLS])
+{
+  byte copyArray[BLOCK_ROWS][BLOCK_COLS];
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      copyArray[i][j] = square[i][j];
+    }
+  }
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      square[i][j] = copyArray[i][((j + i) % BLOCK_COLS)];
+    }
+  }
+}
+
+void unShiftRows(byte square[BLOCK_ROWS][BLOCK_COLS])
+{
+  byte copyArray[BLOCK_ROWS][BLOCK_COLS];
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      copyArray[i][j] = square[i][j];
+    }
+  }
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      square[i][((j + i)) % BLOCK_COLS] = copyArray[i][j];
+    }
+  }
+}
 
 void mixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] )
 {
