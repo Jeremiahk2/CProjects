@@ -2,26 +2,48 @@
 #include "field.h"
 #include "io.h"
 
+/** the number of arguments the program should have */
+#define NUM_ARGS 4
+/** The index in argv where the key file name should be */
+#define KEY_FILE 1
+/** The index in argv where the input file name should be */
+#define INPUT_FILE 2
+/** The index in argv where the output file name should be */
+#define OUTPUT_FILE 3
+
 int main(int argc, char *argv[])
 {
-  if (argc != 4) {
+  if (argc != NUM_ARGS) {
     fprintf(stderr, "usage: encrypt <key-file> <input-file> <output-file>\n");
     exit(1);
   }
   int keySize = 0;
-  byte *key = readBinaryFile(argv[1], &keySize);
+  byte *key = readBinaryFile(argv[KEY_FILE], &keySize);
 
-  if (keySize != 16) {
-    fprintf(stderr, "Bad key file: %s\n", argv[1]);
+  if (key == NULL) {
+    fprintf(stderr, "Can't open file: %s\n", argv[KEY_FILE]);
+    free(key);
+    exit(1);
+  }
+
+  if (keySize != BLOCK_SIZE) {
+    fprintf(stderr, "Bad key file: %s\n", argv[KEY_FILE]);
     free(key);
     exit(1);
   }
 
   int inputSize = 0;
-  byte *input = readBinaryFile(argv[2], &inputSize);
+  byte *input = readBinaryFile(argv[INPUT_FILE], &inputSize);
+
+  if (input == NULL) {
+    fprintf(stderr, "Can't open file: %s\n", argv[INPUT_FILE]);
+    free(input);
+    free(key);
+    exit(1);
+  }
 
   if (inputSize == 0 || inputSize % BLOCK_SIZE != 0) {
-    fprintf(stderr, "Bad plaintext file length: %s\n", argv[2]);
+    fprintf(stderr, "Bad plaintext file length: %s\n", argv[INPUT_FILE]);
     free(key);
     free(input);
     exit(1);
@@ -37,7 +59,7 @@ int main(int argc, char *argv[])
       input[i * BLOCK_SIZE + j] = block[j];
     }
   }
-  writeBinaryFile(argv[3], input, inputSize);
+  writeBinaryFile(argv[OUTPUT_FILE], input, inputSize);
 
   free(input);
   free(key);

@@ -11,8 +11,7 @@ byte *readBinaryFile(char const *filename, int *size)
 {
   FILE *bstream = fopen(filename, "rb");
   if (bstream == NULL) {
-    fprintf(stderr, "Can't open file: %s\n", filename);
-    exit(1);
+    return NULL;
   }
   byte *values = (byte *)malloc(1 * sizeof(byte));
   int memLength = 1;
@@ -22,7 +21,7 @@ byte *readBinaryFile(char const *filename, int *size)
     *(values + num) = current;
     num++;
     if (num == memLength) {
-      memLength *=2;
+      memLength *= INC_CAP;
       values = realloc(values, memLength);
     }
     current = fgetc(bstream);

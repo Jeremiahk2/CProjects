@@ -13,6 +13,8 @@
 #include "field.h"
 #include <string.h>
 #include <stdbool.h>
+/** The amount to increase the capacity of the resizable array by*/
+#define INC_CAP 2
 
 /**
   Returns a list of bytes (characters) collected from the given file

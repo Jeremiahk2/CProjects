@@ -16,6 +16,10 @@ typedef unsigned char byte;
 
 /** Number of bits in a byte. */
 #define BBITS 8
+/** The amount to shift the mask by in binary */
+#define MASK_SHIFT 2
+/** The preset value for the reducer for binary multiplication */
+#define REDUCER 0x11B
 
 /**
   Function for adding byte a to byte b

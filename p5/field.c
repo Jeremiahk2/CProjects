@@ -22,12 +22,12 @@ byte fieldMul(byte a, byte b)
 {
   short phaseOne[BBITS] = {};
   //Cycle through, shifting each time we find a one in the a byte.
-  unsigned char mask = 1;
+  byte mask = 1;
   for (int i = 0; i < BBITS; i++) {
     if ((b & mask) == mask) {
       phaseOne[i] = a << i;
     }
-    mask = mask * 2;
+    mask = mask * MASK_SHIFT;
   }
   //Compile the phaseOne 16-bit values together int one short.
   short compilation = phaseOne[0];
@@ -35,7 +35,7 @@ byte fieldMul(byte a, byte b)
     compilation = compilation ^ phaseOne[i];
   }
   short reducerShift = BBITS - 1;
-  unsigned short reducer = 0x11B << reducerShift;
+  unsigned short reducer = REDUCER << reducerShift;
   for (int i = 0; i <= reducerShift; i++) {
     int shift = BBITS + reducerShift - i;
     if ((compilation >> shift) == (reducer >> shift)) {

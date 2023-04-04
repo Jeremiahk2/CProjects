@@ -2,26 +2,46 @@
 #include "field.h"
 #include "io.h"
 
+/** the number of arguments the program should have */
+#define NUM_ARGS 4
+/** The index in argv where the key file name should be */
+#define KEY_FILE 1
+/** The index in argv where the input file name should be */
+#define CIPHER_FILE 2
+/** The index in argv where the output file name should be */
+#define OUTPUT_FILE 3
+
 int main(int argc, char *argv[])
 {
-  if (argc != 4) {
+  if (argc != NUM_ARGS) {
     fprintf(stderr, "usage: encrypt <key-file> <input-file> <output-file>\n");
     exit(1);
   }
   int keySize = 0;
-  byte *key = readBinaryFile(argv[1], &keySize);
+  byte *key = readBinaryFile(argv[KEY_FILE], &keySize);
+  if (key == NULL) {
+    fprintf(stderr, "Can't open file: %s\n", argv[KEY_FILE]);
+    free(key);
+    exit(1);
+  }
 
-  if (keySize != 16) {
-    fprintf(stderr, "Bad key file: %s\n", argv[1]);
+  if (keySize != BLOCK_SIZE) {
+    fprintf(stderr, "Bad key file: %s\n", argv[KEY_FILE]);
     free(key);
     exit(1);
   }
 
   int cipherSize = 0;
-  byte *cipher = readBinaryFile(argv[2], &cipherSize);
+  byte *cipher = readBinaryFile(argv[CIPHER_FILE], &cipherSize);
+  if (cipher == NULL) {
+    fprintf(stderr, "Can't open file: %s\n", argv[CIPHER_FILE]);
+    free(cipher);
+    free(key);
+    exit(1);
+  }
 
   if (cipherSize == 0 || cipherSize % BLOCK_SIZE != 0) {
-    fprintf(stderr, "Bad ciphertext file length: %s\n", argv[2]);
+    fprintf(stderr, "Bad ciphertext file length: %s\n", argv[CIPHER_FILE]);
     free(key);
     free(cipher);
     exit(1);
@@ -37,7 +57,7 @@ int main(int argc, char *argv[])
       cipher[i * BLOCK_SIZE + j] = block[j];
     }
   }
-  writeBinaryFile(argv[3], cipher, cipherSize);
+  writeBinaryFile(argv[OUTPUT_FILE], cipher, cipherSize);
 
   free(cipher);
   free(key);
