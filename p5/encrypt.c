@@ -35,4 +35,9 @@ int main(int argc, char *argv[])
     }
   }
   writeBinaryFile(argv[3], input, inputSize);
+
+  // free(input);
+  // free(key);
+
+  return EXIT_SUCCESS;
 }

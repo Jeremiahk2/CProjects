@@ -35,4 +35,9 @@ int main(int argc, char *argv[])
     }
   }
   writeBinaryFile(argv[3], cipher, cipherSize);
+
+  // free(cipher);
+  // free(key);
+
+  return EXIT_SUCCESS;
 }

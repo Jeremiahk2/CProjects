@@ -7,7 +7,7 @@ encrypt: encrypt.o aes.o field.o io.o
 	gcc -Wall -std=c99 -g encrypt.o aes.o field.o io.o -o encrypt
 
 decrypt: decrypt.o aes.o field.o io.o
-	gcc -Wall -std=c99 -g encrypt.o aes.o field.o io.o -o decrypt
+	gcc -Wall -std=c99 -g decrypt.o aes.o field.o io.o -o decrypt
 
 fieldTest: fieldTest.o field.o
 	gcc -Wall -std=c99  -g fieldTest.o field.o -o fieldTest
@@ -41,3 +41,5 @@ clean:
 	rm -f decrypt
 	rm -f fieldTest
 	rm -f aesTest
+	rm -f output.dat
+	rm -f stderr.txt

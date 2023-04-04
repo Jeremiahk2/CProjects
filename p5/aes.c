@@ -273,6 +273,7 @@ void encryptBlock(byte data[BLOCK_SIZE], byte key[BLOCK_SIZE])
   for (int i = 1; i < ROUNDS + 1; i++) {
     byte square[BLOCK_ROWS][BLOCK_COLS];
     for (int j = 0; j < BLOCK_SIZE; j++) {
+      // printf("I: %d J: %d Value: %X\n", i, j, substBox(data[j]));
       data[j] = substBox(data[j]);
     }
     blockToSquare(square, data);

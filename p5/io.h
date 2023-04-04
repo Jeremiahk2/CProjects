@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "field.h"
+#include <string.h>
+#include <stdbool.h>
 
 /**
   Returns a list of bytes (characters) collected from the given file
