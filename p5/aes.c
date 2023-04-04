@@ -1,4 +1,8 @@
 /**
+  @file aes.c
+  @author Jeremiah Knizley
+  Contains numerous methods that are required for encryption and decryption.
+  Mostly they manipulate data in repeatable ways so that encryption and decryption work together.
 */
 
 #include "aes.h"
@@ -106,10 +110,10 @@ void gFunction( byte dest[ WORD_SIZE ], byte const src[ WORD_SIZE ], int r )
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
   };
 
-  dest[3] = substBox(src[0]);
-  dest[2] = substBox(src[3]);
-  dest[1] = substBox(src[2]);
-  dest[0] = substBox(src[1]) ^ roundConstant[r];
+  dest[BYTE_THREE] = substBox(src[BYTE_ZERO]);
+  dest[BYTE_TWO] = substBox(src[BYTE_THREE]);
+  dest[BYTE_ONE] = substBox(src[BYTE_TWO]);
+  dest[BYTE_ZERO] = substBox(src[BYTE_ONE]) ^ roundConstant[r];
 }  
 
 void addSubkey(byte data[BLOCK_SIZE], byte const key[BLOCK_SIZE])
@@ -142,7 +146,7 @@ void generateSubkeys(byte subkey[ROUNDS + 1][BLOCK_SIZE], byte const key[BLOCK_S
       byte tempWord[WORD_SIZE];
       //If we are on the first word, do the gfunction.
       if (j == 0) {
-        gFunction(tempWord, words[3], i);
+        gFunction(tempWord, words[WORD_THREE], i);
         //Do exclusive OR w/ gfunction
         for (int k = 0; k < WORD_SIZE; k++) {
           words[j][k] = fieldAdd(words[j][k], tempWord[k]);
@@ -235,7 +239,8 @@ void mixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] )
   for (int i = 0; i < BLOCK_ROWS; i++) {
     for (int j = 0; j < BLOCK_COLS; j++) {
       square[i][j] = fieldAdd(fieldMul(mixMatrix[i][0], copyArray[0][j]), 
-      fieldAdd(fieldMul(mixMatrix[i][1], copyArray[1][j]), fieldAdd(fieldMul(mixMatrix[i][2], copyArray[2][j]), fieldMul(mixMatrix[i][3], copyArray[3][j]))));
+      fieldAdd(fieldMul(mixMatrix[i][BYTE_ONE], copyArray[BYTE_ONE][j]), 
+      fieldAdd(fieldMul(mixMatrix[i][BYTE_TWO], copyArray[BYTE_TWO][j]), fieldMul(mixMatrix[i][BYTE_THREE], copyArray[BYTE_THREE][j]))));
     }
   }
 }
@@ -260,7 +265,8 @@ void unMixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] )
   for (int i = 0; i < BLOCK_ROWS; i++) {
     for (int j = 0; j < BLOCK_COLS; j++) {
       square[i][j] = fieldAdd(fieldMul(invMixMatrix[i][0], copyArray[0][j]), 
-      fieldAdd(fieldMul(invMixMatrix[i][1], copyArray[1][j]), fieldAdd(fieldMul(invMixMatrix[i][2], copyArray[2][j]), fieldMul(invMixMatrix[i][3], copyArray[3][j]))));
+      fieldAdd(fieldMul(invMixMatrix[i][BYTE_ONE], copyArray[BYTE_ONE][j]), 
+      fieldAdd(fieldMul(invMixMatrix[i][BYTE_TWO], copyArray[BYTE_TWO][j]), fieldMul(invMixMatrix[i][BYTE_THREE], copyArray[BYTE_THREE][j]))));
     }
   }
 }

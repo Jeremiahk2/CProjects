@@ -1,3 +1,10 @@
+/**
+  @file decrypt.c
+  @author Jeremiah Knizley
+  File for decrypting data from a file.
+  usage: ./decrypt <key-file> <cipher-file> <output-file>
+*/
+
 #include "aes.h"
 #include "field.h"
 #include "io.h"
@@ -6,11 +13,18 @@
 #define NUM_ARGS 4
 /** The index in argv where the key file name should be */
 #define KEY_FILE 1
-/** The index in argv where the input file name should be */
+/** The index in argv where the cipher file name should be */
 #define CIPHER_FILE 2
 /** The index in argv where the output file name should be */
 #define OUTPUT_FILE 3
 
+/**
+  Main part of the program. decrypts the cipher file using the given key.
+  File must contain a multiple of 16 bytes.
+  @param argc the number of command-line arguments. Should be 4 to be valid.
+  @param argv the array containing the command-line arguments.
+  @return exit status
+*/
 int main(int argc, char *argv[])
 {
   if (argc != NUM_ARGS) {

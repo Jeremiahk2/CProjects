@@ -1,3 +1,10 @@
+/**
+  @file encrypt.c
+  @author Jeremiah Knizley
+  File for encrypting data from a file.
+  usage: ./encrypt <key-file> <input-file> <output-file>
+*/
+
 #include "aes.h"
 #include "field.h"
 #include "io.h"
@@ -11,6 +18,13 @@
 /** The index in argv where the output file name should be */
 #define OUTPUT_FILE 3
 
+/**
+  Main part of the program. Encrypts the input file using the given key.
+  File must contain a multiple of 16 bytes.
+  @param argc the number of command-line arguments. Should be 4 to be valid.
+  @param argv the array containing the command-line arguments.
+  @return exit status
+*/
 int main(int argc, char *argv[])
 {
   if (argc != NUM_ARGS) {

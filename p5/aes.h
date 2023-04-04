@@ -25,6 +25,18 @@
 /** Number of roudns for 128-bit AES. */
 #define ROUNDS 10
 
+/** The zeroth byte in a word */
+#define BYTE_ZERO 0
+/** The first byte in a word */
+#define BYTE_ONE 1
+/** The second byte in a word */
+#define BYTE_TWO 2
+/** The third byte in a word */
+#define BYTE_THREE 3
+
+/** The third word in a block. This word is the "special word" used for gfunction */
+#define WORD_THREE 3
+
 /**
   Adds the key to data using fieldAdd operations for each byte
   @param data the array that will hold the result of the operations
