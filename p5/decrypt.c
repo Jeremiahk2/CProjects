@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
   int cipherSize = 0;
   byte *cipher = readBinaryFile(argv[2], &cipherSize);
 
-  if (inputSize == 0 || inputSize % BLOCK_SIZE != 0) {
-    fprintf(stderr, "Bad ciphertext file length: %s\n", filename);
+  if (cipherSize == 0 || cipherSize % BLOCK_SIZE != 0) {
+    fprintf(stderr, "Bad ciphertext file length: %s\n", argv[2]);
     exit(1);
   }
 
@@ -34,5 +34,5 @@ int main(int argc, char *argv[])
       cipher[i * BLOCK_SIZE + j] = block[j];
     }
   }
-  writeBinaryFile(output, cipher, inputSize);
+  writeBinaryFile(argv[3], cipher, cipherSize);
 }

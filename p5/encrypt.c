@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   byte *input = readBinaryFile(argv[2], &inputSize);
 
   if (inputSize == 0 || inputSize % BLOCK_SIZE != 0) {
-    fprintf(stderr, "Bad plaintext file length: %s\n", filename);
+    fprintf(stderr, "Bad plaintext file length: %s\n", argv[2]);
     exit(1);
   }
 
@@ -34,5 +34,5 @@ int main(int argc, char *argv[])
       input[i * BLOCK_SIZE + j] = block[j];
     }
   }
-  writeBinaryFile(output, input, inputSize);
+  writeBinaryFile(argv[3], input, inputSize);
 }

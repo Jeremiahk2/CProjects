@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "field.h"
 
 /**
   Returns a list of bytes (characters) collected from the given file
