@@ -225,7 +225,19 @@ void mixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] )
     { 0x03, 0x01, 0x01, 0x02 }
   };
 
-  // ...
+  byte copyArray[BLOCK_ROWS][BLOCK_COLS];
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      copyArray[i][j] = square[i][j];
+    }
+  }
+
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      square[i][j] = fieldAdd(fieldMul(mixMatrix[i][0], copyArray[0][j]), 
+      fieldAdd(fieldMul(mixMatrix[i][1], copyArray[1][j]), fieldAdd(fieldMul(mixMatrix[i][2], copyArray[2][j]), fieldMul(mixMatrix[i][3], copyArray[3][j]))));
+    }
+  }
 }
 
 void unMixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] )
@@ -238,5 +250,59 @@ void unMixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] )
     { 0x0B, 0x0D, 0x09, 0x0E }
   };
 
-  // ...
+  byte copyArray[BLOCK_ROWS][BLOCK_COLS];
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      copyArray[i][j] = square[i][j];
+    }
+  }
+
+  for (int i = 0; i < BLOCK_ROWS; i++) {
+    for (int j = 0; j < BLOCK_COLS; j++) {
+      square[i][j] = fieldAdd(fieldMul(invMixMatrix[i][0], copyArray[0][j]), 
+      fieldAdd(fieldMul(invMixMatrix[i][1], copyArray[1][j]), fieldAdd(fieldMul(invMixMatrix[i][2], copyArray[2][j]), fieldMul(invMixMatrix[i][3], copyArray[3][j]))));
+    }
+  }
+}
+
+void encryptBlock(byte data[BLOCK_SIZE], byte key[BLOCK_SIZE])
+{
+  byte subkey[ROUNDS + 1][BLOCK_SIZE];
+  generateSubkeys(subkey, key);
+  addSubkey(data, subkey[0]);
+  for (int i = 1; i < ROUNDS + 1; i++) {
+    byte square[BLOCK_ROWS][BLOCK_COLS];
+    for (int j = 0; j < BLOCK_SIZE; j++) {
+      data[j] = substBox(data[j]);
+    }
+    blockToSquare(square, data);
+    shiftRows(square);
+    if (i != ROUNDS) {
+      mixColumns(square);
+    }
+    squareToBlock(data, square);
+    addSubkey(data, subkey[i]);
+    
+    
+  }
+}
+
+void decryptBlock(byte data[BLOCK_SIZE], byte key[BLOCK_SIZE])
+{
+  byte subkey[ROUNDS + 1][BLOCK_SIZE];
+  generateSubkeys(subkey, key);
+  for (int i = ROUNDS; i > 0; i--) {
+    byte square[BLOCK_ROWS][BLOCK_COLS];
+    addSubkey(data, subkey[i]);
+    blockToSquare(square, data);
+    if (i != ROUNDS) {
+      unMixColumns(square);
+    }
+    unShiftRows(square);
+    squareToBlock(data, square);
+    for (int j = 0; j < BLOCK_SIZE; j++) {
+      data[j] = invSubstBox(data[j]);
+    }
+  }
+  addSubkey(data, subkey[0]);
 }

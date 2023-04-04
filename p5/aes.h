@@ -35,4 +35,13 @@ void squareToBlock(byte data[BLOCK_SIZE], byte const square[BLOCK_ROWS][BLOCK_CO
 void shiftRows(byte square[BLOCK_ROWS][BLOCK_COLS]);
 
 void unShiftRows(byte square[BLOCK_ROWS][BLOCK_COLS]);
+
+void mixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] );
+
+void unMixColumns( byte square[ BLOCK_ROWS ][ BLOCK_COLS ] );
+
+void encryptBlock(byte data[BLOCK_SIZE], byte key[BLOCK_SIZE]);
+
+void decryptBlock(byte data[BLOCK_SIZE], byte key[BLOCK_SIZE]);
+
 #endif

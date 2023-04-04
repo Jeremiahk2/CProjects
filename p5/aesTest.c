@@ -233,7 +233,7 @@ int main()
     for ( int r = 0; r < BLOCK_ROWS; r++ )
       TestCase( memcmp( square[ r ], expected[ r ], BLOCK_COLS ) == 0 );
   }
-#ifdef DISABLE_TESTS 
+
   ////////////////////////////////////////////////////////////////////////
   // Test mixColumns()
   
@@ -253,7 +253,6 @@ int main()
     for ( int r = 0; r < BLOCK_ROWS; r++ )
       TestCase( memcmp( square[ r ], expected[ r ], BLOCK_COLS ) == 0 );
   }
-
   ////////////////////////////////////////////////////////////////////////
   // Test unMixColumns()
   
@@ -273,7 +272,7 @@ int main()
     for ( int r = 0; r < BLOCK_ROWS; r++ )
       TestCase( memcmp( square[ r ], expected[ r ], BLOCK_COLS ) == 0 );
   }
-
+   
   ////////////////////////////////////////////////////////////////////////
   // Test encryptBlock()
   
@@ -297,7 +296,6 @@ int main()
 
     TestCase( memcmp( data, expected, BLOCK_SIZE ) == 0 );
   }
-
   ////////////////////////////////////////////////////////////////////////
   // Test decryptBlock()
   
@@ -321,7 +319,7 @@ int main()
 
     TestCase( memcmp( data, expected, BLOCK_SIZE ) == 0 );
   }
-
+  #ifdef DISABLE_TESTS
   // Once you move the #ifdef DISABLE_TESTS to here, you've enabled
   // all the tests.
 

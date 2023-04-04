@@ -10,6 +10,10 @@
 byte *readBinaryFile(char const *filename, int *size) 
 {
   FILE *bstream = fopen(filename, "rb");
+  if (key == NULL) {
+    fprintf(stderr, "Can't open file: %s", filename);
+    exit(1);
+  }
   char *values = (char *)malloc(1 * sizeof(char));
   int memLength = 1;
   int num = 0;
@@ -33,6 +37,10 @@ byte *readBinaryFile(char const *filename, int *size)
 void writeBinaryFile(char const *filename, byte *data, int size)
 {
   FILE *ostream = fopen(filename, "wb");
+  if (ostream == NULL) {
+    printf(stderr, "Can't open file: %s", filename);
+    exit(1);
+  }
 
   fwrite(data, sizeof(byte), size, ostream);
 }
