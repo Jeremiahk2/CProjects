@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 
   if (keySize != 16) {
     fprintf(stderr, "Bad key file: %s\n", argv[1]);
+    free(key);
     exit(1);
   }
 
@@ -21,10 +22,12 @@ int main(int argc, char *argv[])
 
   if (inputSize == 0 || inputSize % BLOCK_SIZE != 0) {
     fprintf(stderr, "Bad plaintext file length: %s\n", argv[2]);
+    free(key);
+    free(input);
     exit(1);
   }
 
-  for (int i = 0; i < inputSize; i++) {
+  for (int i = 0; i < inputSize / BLOCK_SIZE; i++) {
     byte block[BLOCK_SIZE];
     for (int j = 0; j < BLOCK_SIZE; j++) {
       block[j] = input[i * BLOCK_SIZE + j];
@@ -36,8 +39,8 @@ int main(int argc, char *argv[])
   }
   writeBinaryFile(argv[3], input, inputSize);
 
-  // free(input);
-  // free(key);
+  free(input);
+  free(key);
 
   return EXIT_SUCCESS;
 }

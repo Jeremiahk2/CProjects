@@ -37,8 +37,10 @@ void writeBinaryFile(char const *filename, byte *data, int size)
   FILE *ostream = fopen(filename, "wb");
   if (ostream == NULL) {
     fprintf(stderr, "Can't open file: %s\n", filename);
+    free(data);
     exit(1);
   }
 
   fwrite(data, sizeof(byte), size, ostream);
+  fclose(ostream);
 }

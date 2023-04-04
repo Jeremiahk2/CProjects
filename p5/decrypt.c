@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 
   if (keySize != 16) {
     fprintf(stderr, "Bad key file: %s\n", argv[1]);
+    free(key);
     exit(1);
   }
 
@@ -21,10 +22,12 @@ int main(int argc, char *argv[])
 
   if (cipherSize == 0 || cipherSize % BLOCK_SIZE != 0) {
     fprintf(stderr, "Bad ciphertext file length: %s\n", argv[2]);
+    free(key);
+    free(cipher);
     exit(1);
   }
 
-  for (int i = 0; i < cipherSize; i++) {
+  for (int i = 0; i < cipherSize / BLOCK_SIZE; i++) {
     byte block[BLOCK_SIZE];
     for (int j = 0; j < BLOCK_SIZE; j++) {
       block[j] = cipher[i * BLOCK_SIZE + j];
@@ -36,8 +39,8 @@ int main(int argc, char *argv[])
   }
   writeBinaryFile(argv[3], cipher, cipherSize);
 
-  // free(cipher);
-  // free(key);
+  free(cipher);
+  free(key);
 
   return EXIT_SUCCESS;
 }
