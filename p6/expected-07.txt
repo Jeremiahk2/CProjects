@@ -1,0 +1,62 @@
+cmd> enqueue 23
+
+cmd> enqueue 100.001
+
+cmd> enqueue 97
+
+cmd> enqueue "string value"
+
+cmd> enqueue 13
+
+cmd> enqueue 44
+
+cmd> enqueue 17.85
+
+cmd> enqueue 3
+
+cmd> enqueue 59
+
+cmd> enqueue "another string"
+
+cmd> promote 23
+
+cmd> promote 17.85
+
+cmd> promote "another string"
+
+cmd> enqueue "last string"
+
+cmd> dequeue
+another string
+
+cmd> dequeue
+17.850
+
+cmd> dequeue
+23
+
+cmd> dequeue
+100.001
+
+cmd> dequeue
+97
+
+cmd> dequeue
+string value
+
+cmd> dequeue
+13
+
+cmd> dequeue
+44
+
+cmd> dequeue
+3
+
+cmd> dequeue
+59
+
+cmd> dequeue
+last string
+
+cmd> quit

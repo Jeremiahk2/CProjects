@@ -1,0 +1,27 @@
+cmd> enqueue 99
+
+cmd> enqueue 7
+
+cmd> enqueue 123456
+
+cmd> enqueue -81
+
+cmd> length
+4
+
+cmd> dequeue
+99
+
+cmd> dequeue
+7
+
+cmd> dequeue
+123456
+
+cmd> dequeue
+-81
+
+cmd> length
+0
+
+cmd> quit

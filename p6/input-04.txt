@@ -1,0 +1,15 @@
+enqueue 1.234
+enqueue 2.345
+enqueue 3.4567
+enqueue 4.56789
+enqueue 5.678901
+enqueue 100000.1
+length
+dequeue
+dequeue
+dequeue
+length
+dequeue
+dequeue
+length
+quit

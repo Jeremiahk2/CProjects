@@ -1,0 +1,4 @@
+enqueue 567
+length
+dequeue
+quit

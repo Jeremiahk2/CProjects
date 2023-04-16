@@ -1,0 +1,12 @@
+enqueue 5
+enqueue 10
+enqueue 15
+enqueue 20
+enqueue 25
+promote 15
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+quit

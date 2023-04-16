@@ -1,0 +1,11 @@
+enqueue 5
+   enqueue      75
+	    length
+enqueue     "this      is      a      test"
+    enqueue      180.00000000
+promote "this      is      a      test"       
+dequeue
+     dequeue     
+dequeue
+dequeue
+quit

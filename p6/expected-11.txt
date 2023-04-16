@@ -1,0 +1,24 @@
+cmd> enqueue 55
+
+cmd> enqueue 66
+
+cmd> enqueue 77b
+Invalid command
+
+cmd> enqueue 88
+
+cmd> enqueue 99
+
+cmd> dequeue
+55
+
+cmd> dequeue
+66
+
+cmd> dequeue
+88
+
+cmd> dequeue
+99
+
+cmd> quit

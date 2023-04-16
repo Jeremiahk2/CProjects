@@ -1,0 +1,35 @@
+cmd> enqueue "one"
+
+cmd> enqueue "two"
+
+cmd> enqueue "three"
+
+cmd> enque   "four"
+Invalid command
+
+cmd> enqueue "five"
+
+cmd> enqueue "six"
+
+cmd> length
+5
+
+cmd> dequeue
+one
+
+cmd> dequeue
+two
+
+cmd> dequeue
+three
+
+cmd> dequeue
+five
+
+cmd> dequeue
+six
+
+cmd> length
+0
+
+cmd> quit

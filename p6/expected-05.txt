@@ -1,0 +1,42 @@
+cmd> enqueue "test"
+
+cmd> enqueue "longer-string"
+
+cmd> enqueue "String with spaces"
+
+cmd> length
+3
+
+cmd> dequeue
+test
+
+cmd> dequeue
+longer-string
+
+cmd> dequeue
+String with spaces
+
+cmd> enqueue "123"
+
+cmd> enqueue "*#($_%!@_+-=]`"
+
+cmd> enqueue ""
+
+cmd> enqueue "last string in the queue"
+
+cmd> length
+4
+
+cmd> dequeue
+123
+
+cmd> dequeue
+*#($_%!@_+-=]`
+
+cmd> dequeue
+
+
+cmd> length
+1
+
+cmd> quit

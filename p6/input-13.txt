@@ -1,0 +1,13 @@
+enqueue 75
+enqueue 3.101
+enqueue "25"
+enqueue "Test"
+enqueue 7.99
+promote 75
+promote 25
+promote 7.99
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue

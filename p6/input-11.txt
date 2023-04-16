@@ -1,0 +1,10 @@
+enqueue 55
+enqueue 66
+enqueue 77b
+enqueue 88
+enqueue 99
+dequeue
+dequeue
+dequeue
+dequeue
+quit

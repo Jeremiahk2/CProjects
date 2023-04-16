@@ -1,0 +1,29 @@
+cmd> enqueue 5
+
+cmd> enqueue 3.14
+
+cmd> enqueue 100
+
+cmd> enqueue "Testing 1, 2, 3."
+
+cmd> length
+4
+
+cmd> promote 100
+
+cmd> dequeue
+100
+
+cmd> dequeue
+5
+
+cmd> dequeue
+3.140
+
+cmd> dequeue
+Testing 1, 2, 3.
+
+cmd> length
+0
+
+cmd> quit

@@ -1,0 +1,37 @@
+cmd> enqueue 1.234
+
+cmd> enqueue 2.345
+
+cmd> enqueue 3.4567
+
+cmd> enqueue 4.56789
+
+cmd> enqueue 5.678901
+
+cmd> enqueue 100000.1
+
+cmd> length
+6
+
+cmd> dequeue
+1.234
+
+cmd> dequeue
+2.345
+
+cmd> dequeue
+3.457
+
+cmd> length
+3
+
+cmd> dequeue
+4.568
+
+cmd> dequeue
+5.679
+
+cmd> length
+1
+
+cmd> quit

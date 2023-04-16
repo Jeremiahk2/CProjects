@@ -1,0 +1,26 @@
+cmd> enqueue 5
+
+cmd>    enqueue      75
+
+cmd> 	    length
+2
+
+cmd> enqueue     "this      is      a      test"
+
+cmd>     enqueue      180.00000000
+
+cmd> promote "this      is      a      test"       
+
+cmd> dequeue
+this      is      a      test
+
+cmd>      dequeue     
+5
+
+cmd> dequeue
+75
+
+cmd> dequeue
+180.000
+
+cmd> quit

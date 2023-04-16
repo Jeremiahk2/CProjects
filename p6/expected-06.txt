@@ -1,0 +1,28 @@
+cmd> enqueue 5
+
+cmd> enqueue 10
+
+cmd> enqueue 15
+
+cmd> enqueue 20
+
+cmd> enqueue 25
+
+cmd> promote 15
+
+cmd> dequeue
+15
+
+cmd> dequeue
+5
+
+cmd> dequeue
+10
+
+cmd> dequeue
+20
+
+cmd> dequeue
+25
+
+cmd> quit

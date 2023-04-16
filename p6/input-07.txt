@@ -1,0 +1,26 @@
+enqueue 23
+enqueue 100.001
+enqueue 97
+enqueue "string value"
+enqueue 13
+enqueue 44
+enqueue 17.85
+enqueue 3
+enqueue 59
+enqueue "another string"
+promote 23
+promote 17.85
+promote "another string"
+enqueue "last string"
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+quit

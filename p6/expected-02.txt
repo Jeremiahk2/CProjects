@@ -1,0 +1,9 @@
+cmd> enqueue 567
+
+cmd> length
+1
+
+cmd> dequeue
+567
+
+cmd> quit

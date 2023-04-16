@@ -1,0 +1,6 @@
+cmd> enqueue 5
+
+cmd> length
+1
+
+cmd> quit

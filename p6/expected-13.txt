@@ -1,0 +1,33 @@
+cmd> enqueue 75
+
+cmd> enqueue 3.101
+
+cmd> enqueue "25"
+
+cmd> enqueue "Test"
+
+cmd> enqueue 7.99
+
+cmd> promote 75
+
+cmd> promote 25
+Invalid command
+
+cmd> promote 7.99
+
+cmd> dequeue
+7.990
+
+cmd> dequeue
+75
+
+cmd> dequeue
+3.101
+
+cmd> dequeue
+25
+
+cmd> dequeue
+Test
+
+cmd> 

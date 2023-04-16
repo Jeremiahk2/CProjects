@@ -1,0 +1,14 @@
+enqueue "one"
+enqueue "two"
+enqueue "three"
+enque   "four"
+enqueue "five"
+enqueue "six"
+length
+dequeue
+dequeue
+dequeue
+dequeue
+dequeue
+length
+quit

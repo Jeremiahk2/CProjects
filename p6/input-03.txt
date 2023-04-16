@@ -1,0 +1,11 @@
+enqueue 99
+enqueue 7
+enqueue 123456
+enqueue -81
+length
+dequeue
+dequeue
+dequeue
+dequeue
+length
+quit
