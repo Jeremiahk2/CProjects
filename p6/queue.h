@@ -8,6 +8,7 @@
 #define QUEUE_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 /** Node containing an arbitrary value. */
 typedef struct NodeStruct {
@@ -43,5 +44,39 @@ typedef struct {
       inside the last node. */
   Node **tail;
 } Queue;
+
+/**
+  Makes an empty, dynamically allocated queue, initializing its fields.
+  @return a pointer to the queue
+*/
+Queue *makeQueue();
+
+/**
+  Adds the given node to the back of the given queue
+  @param q the queue to add the node to
+  @param n the node to add to the queue
+  */
+void enqueue(Queue *q, Node *n);
+
+/**
+  Removes the node at the front of the given queue
+  @param q the queue to remove the node from
+  @return the node that was removed, or NULL if the queue is empty.
+*/
+Node *dequeue(Queue *q);
+
+/**
+  Finds the first node in the queue with a value that matches paramater example.
+  Moves the node that matches example to the front of the queue
+  @param q the queue to search in
+  @param example the node to compare with.
+  @return true if a node is found, false if not.
+*/
+bool promote(Queue *q, Node const *example);
+
+/**
+  Frees all the memory used to store the given queue, including the memory for each of the nodes.
+  */
+void freeQueue(Queue *q);
 
 #endif

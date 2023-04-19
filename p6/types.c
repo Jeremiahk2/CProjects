@@ -35,8 +35,12 @@ Node *makeIntNode( char const *init )
   // Allocate space for the node plus a little more for its value.
   Node *n = (Node *) malloc( sizeof( Node ) + sizeof( int ) );
 
-  // Fill in the node's int (just 5 for now)
-  * (int *) n->data = 5;
+  int matches = sscanf(init, "%d", (int *)n->data);
+  if (matches == 0) {
+    return NULL;
+  }
+  // // Fill in the node's int (just 5 for now)
+  // * (int *) n->data = 5;    //I THINK what is happening here is that we are casting n->data to a int pointer, and then dereferencing it to assign it.
 
   // Fill in pointers for its methods defined above.
   n->print = printIntNode;
@@ -44,16 +48,56 @@ Node *makeIntNode( char const *init )
   return n;
 }
 
+/** Function used as the print method for an real node. */
+static void printRealNode( Node const *n )
+{
+  printf( "%lf", * (double *) ( n->data ) );
+}
+
+/** Function used as the comparison method for real nodes. */
+static bool equalsRealNode( Node const *a, Node const *b )
+{
+  return b->print == printRealNode &&
+    * ( (double *) a->data ) == * ( (double *) b->data );
+}
+
 Node *makeRealNode( char const *init )
 {
-  // Add code to actually parse the init string and create a
-  // real value node if it's in the right format.
-  return NULL;
+  Node *n = (Node *) malloc( sizeof( Node ) + sizeof( double ) );
+  int matches = sscanf(init, "%lf", (double *)n->data);
+  if (matches == 0) {
+    return NULL;
+  }
+
+  n->print = printRealNode;
+  n->equals = equalsRealNode;
+  return n;
+}
+
+/** Function used as the print method for an integer node. */
+static void printStringNode( Node const *n )
+{
+  printf("%s", n->data);
+}
+
+/** Function used as the comparison method for an integer nodes. */
+static bool equalsStringNode( Node const *a, Node const *b )
+{
+  return b->print == printRealNode &&
+    (strcmp(a->data, b->data) == 0);
 }
 
 Node *makeStringNode( char const *init )
 {
   // Add code to actually parse the init string and create a
   // string value node if it's in the right format.
-  return NULL;
+  Node *n = (Node *) malloc( sizeof( Node ) + sizeof( char * ) );
+  int matches = sscanf(init, "%s", n->data);
+  if (matches == 0) {
+    return NULL;
+  }
+
+  n->print = printStringNode;
+  n->equals = equalsStringNode;
+  return n;
 }
