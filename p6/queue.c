@@ -41,13 +41,13 @@ bool promote(Queue *q, Node const *example)
   if (example->equals(example, q->head)) {
     return true;
   }
-  Node **link = &(q->head); //This is truncating our list.
+  Node **link = &(q->head); 
   //Find the node before the one we want.
-  while (*link && !(example->equals(example, (*link)->next))) {
+  while (*link && (*link)->next && !(example->equals(example, (*link)->next))) {
     link = &(*link)->next;
   }
   //If we didn't find it, return false.
-  if (*link == NULL) {
+  if ((*link)->next == NULL) {
     return false;
   }
   //If we did find it, move it to the front.

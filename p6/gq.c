@@ -24,85 +24,98 @@ int main()
   while (!quit) {
     printf("cmd> ");
     char *command = readLine(stdin); //The whole command.
-    printf("%s\n", command);
-    int pos;        //The current position.
-    char first[strlen(command) + 1];
-    sscanf(command, "%s%n", first, &pos);
+    if (command == NULL) {
+      free(command);
+      freeQueue(queue);
+      quit = true;
+    }
+    else {
+      printf("%s\n", command);
+      int pos;        //The current position.
+      char first[strlen(command) + 1];
+      sscanf(command, "%s%n", first, &pos);
 
-    if (strcmp(first, "enqueue") == 0) {
-      char second[strlen(command) + 1];
+      if (strcmp(first, "enqueue") == 0) {
+        char second[strlen(command) + 1];
 
-      char trash;
-      int numSpaces;
-      sscanf(command + pos, " %c%n", &trash, &numSpaces);
-      numSpaces--;
+        char trash;
+        int numSpaces;
+        sscanf(command + pos, " %c%n", &trash, &numSpaces);
+        numSpaces--;
 
-      strcpy(second, command + pos + numSpaces);
-      Node *new = makeIntNode(second);
-      if (new != NULL) {
-        enqueue(queue, new);
-      }
-      else {
-        new = makeRealNode(second);
+        strcpy(second, command + pos + numSpaces);
+        Node *new = nodeMakers[0](second);
         if (new != NULL) {
           enqueue(queue, new);
         }
         else {
-          new = makeStringNode(second);
+          new = nodeMakers[1](second);
           if (new != NULL) {
             enqueue(queue, new);
           }
           else {
-            printf("Invalid command\n");
+            new = nodeMakers[2](second);
+            if (new != NULL) {
+              enqueue(queue, new);
+            }
+            else {
+              printf("Invalid command\n");
+            }
           }
         }
+        printf("\n");
       }
-      printf("\n");
-    }
-    else if (strcmp(first, "dequeue") == 0) {
-      Node *rtn = dequeue(queue);
-      rtn->print(rtn);
+      else if (strcmp(first, "dequeue") == 0) {
+        Node *rtn = dequeue(queue);
+        rtn->print(rtn);
 
-      free(rtn);
+        free(rtn);
 
-      printf("\n");
-      printf("\n");
-    }
-    else if (strcmp(first, "promote") == 0) {
-      char second[strlen(command) + 1];
+        printf("\n");
+        printf("\n");
+      }
+      else if (strcmp(first, "promote") == 0) {
+        char second[strlen(command) + 1];
 
-      char trash;
-      int numSpaces;
-      sscanf(command + pos, " %c%n", &trash, &numSpaces);
-      numSpaces--;
+        char trash;
+        int numSpaces;
+        sscanf(command + pos, " %c%n", &trash, &numSpaces);
+        numSpaces--;
 
-      strcpy(second, command + pos + numSpaces);
-      Node *new = makeIntNode(second);
+        strcpy(second, command + pos + numSpaces);
+        Node *new = nodeMakers[0](second);
 
-      if (new == NULL) {
-        new = makeRealNode(second);
         if (new == NULL) {
-          new = makeStringNode(second);
+          new = nodeMakers[1](second);
+          if (new == NULL) {
+            new = nodeMakers[2](second);
+          }
         }
+        bool promoted = promote(queue, new);
+        if (!promoted) {
+          printf("Invalid command\n");
+        }
+        free(new);
+        printf("\n");
       }
-      promote(queue, new);
-      free(new);
-      printf("\n");
-    }
-    else if (strcmp(first, "length") == 0) {
-      int length = 0;
-      Node *link = queue->head;
-      while (link) {
-        length++;
-        link = link->next;
+      else if (strcmp(first, "length") == 0) {
+        int length = 0;
+        Node *link = queue->head;
+        while (link) {
+          length++;
+          link = link->next;
+        }
+        printf("%d\n", length);
+        printf("\n");
       }
-      printf("%d\n", length);
-      printf("\n");
+      else if (strcmp(first, "quit") == 0) {
+        quit = true;
+        freeQueue(queue);
+      }
+      else {
+        printf("Invalid command\n\n");
+      }
+      free(command);
     }
-    else if (strcmp(first, "quit") == 0) {
-      quit = true;
-      freeQueue(queue);
-    }
-    free(command);
   }
 }
