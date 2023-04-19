@@ -35,8 +35,16 @@ Node *makeIntNode( char const *init )
   // Allocate space for the node plus a little more for its value.
   Node *n = (Node *) malloc( sizeof( Node ) + sizeof( int ) );
 
+  char first[strlen(init) + 1];
+  char period[strlen(init) + 1];
+  int doubleMatches = sscanf(init, "%[0-9]%[.]", first, period);
+  if (doubleMatches > 1) {
+    free(n);
+    return NULL;
+  }
   int matches = sscanf(init, "%d", (int *)n->data);
   if (matches == 0) {
+    free(n);
     return NULL;
   }
   // // Fill in the node's int (just 5 for now)
@@ -45,13 +53,14 @@ Node *makeIntNode( char const *init )
   // Fill in pointers for its methods defined above.
   n->print = printIntNode;
   n->equals = equalsIntNode;
+  n->next = NULL;
   return n;
 }
 
 /** Function used as the print method for an real node. */
 static void printRealNode( Node const *n )
 {
-  printf( "%lf", * (double *) ( n->data ) );
+  printf( "%.3lf", * (double *) ( n->data ) );
 }
 
 /** Function used as the comparison method for real nodes. */
@@ -66,9 +75,10 @@ Node *makeRealNode( char const *init )
   Node *n = (Node *) malloc( sizeof( Node ) + sizeof( double ) );
   int matches = sscanf(init, "%lf", (double *)n->data);
   if (matches == 0) {
+    free(n);
     return NULL;
   }
-
+  n->next = NULL;
   n->print = printRealNode;
   n->equals = equalsRealNode;
   return n;
@@ -91,12 +101,14 @@ Node *makeStringNode( char const *init )
 {
   // Add code to actually parse the init string and create a
   // string value node if it's in the right format.
-  Node *n = (Node *) malloc( sizeof( Node ) + sizeof( char * ) );
+  Node *n = (Node *) malloc( sizeof( Node ) + sizeof( init ) );
   int matches = sscanf(init, "%s", n->data);
   if (matches == 0) {
+    free(n);
     return NULL;
   }
 
+  n->next = NULL;
   n->print = printStringNode;
   n->equals = equalsStringNode;
   return n;

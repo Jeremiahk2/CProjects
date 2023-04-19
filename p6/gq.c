@@ -26,8 +26,10 @@ int main()
     char *command = readLine(stdin); //The whole command.
     printf("%s\n", command);
     int pos;        //The current position.
-    int matches = sscanf(command, "enqueue%n", &pos);
-    if (matches > 0) {
+    char first[strlen(command) + 1];
+    sscanf(command, "%s%n", first, &pos);
+
+    if (strcmp(first, "enqueue") == 0) {
       char second[strlen(command) + 1];
       sscanf(command + pos, "%s", second);
       Node *new = makeIntNode(second);
@@ -46,48 +48,46 @@ int main()
           }
         }
       }
+      printf("\n");
     }
-    matches = sscanf(command, "dequeue%n", &pos);
-    if (matches > 0) {
+    else if (strcmp(first, "dequeue") == 0) {
       Node *rtn = dequeue(queue);
       rtn->print(rtn);
+
+      free(rtn);
+
+      printf("\n");
+      printf("\n");
     }
-    matches = sscanf(command, "promote%n", &pos);
-    if (matches > 0) {
+    else if (strcmp(first, "promote") == 0) {
       char second[strlen(command) + 1];
       sscanf(command + pos, "%s", second);
       Node *new = makeIntNode(second);
-      if (new != NULL) {
-        enqueue(queue, new);
-      }
-      else {
+
+      if (new == NULL) {
         new = makeRealNode(second);
-        if (new != NULL) {
-          enqueue(queue, new);
-        }
-        else {
+        if (new == NULL) {
           new = makeStringNode(second);
-          if (new != NULL) {
-            enqueue(queue, new);
-          }
         }
       }
       promote(queue, new);
+      free(new);
+      printf("\n");
     }
-    matches = sscanf(command, "length");
-    if (matches > 0) {
+    else if (strcmp(first, "length") == 0) {
       int length = 0;
-      Node **link = &(queue->head);
-      //Find the node before the one we want.
-      while (*link) {
+      Node *link = queue->head;
+      while (link) {
         length++;
-        link = &(*link)->next;
+        link = link->next;
       }
       printf("%d\n", length);
+      printf("\n");
     }
-    matches = sscanf(command, "quit");
-    if (matches > 0) {
+    else if (strcmp(first, "quit") == 0) {
       quit = true;
+      freeQueue(queue);
     }
+    free(command);
   }
 }

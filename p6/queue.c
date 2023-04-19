@@ -8,8 +8,8 @@
 Queue *makeQueue()
 {
   Queue *queue = (Queue *)malloc(sizeof(Queue));
-  queue->head = NULL;           //May need to malloc this (probably not)
-  queue->tail = &(queue->head); //This too (more likely)
+  queue->head = NULL;         //May need to malloc this (probably not)
+  queue->tail = &(queue->head); //(Node **)malloc(sizeof(Node *)); //This too (more likely)
   return queue;
 }
 
