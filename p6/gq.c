@@ -52,6 +52,9 @@ int main()
           if (new != NULL) {
             enqueue(queue, new);
           }
+          else {
+            printf("Invalid command\n");
+          }
         }
       }
       printf("\n");

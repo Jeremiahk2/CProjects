@@ -37,11 +37,25 @@ Node *makeIntNode( char const *init )
 
   char first[strlen(init) + 1];
   char period[strlen(init) + 1];
+
+  //Check for a period which means it's a double.
   int doubleMatches = sscanf(init, "%[0-9]%[.]", first, period);
   if (doubleMatches > 1) {
     free(n);
     return NULL;
   }
+
+  //Check for ANYTHING after the int.
+  // int pos;
+  int trash;
+  char moreTrash[strlen(init) + 1];
+  int extraMatches = sscanf(init, "%d %s", &trash, moreTrash);
+  if (extraMatches == 2) {
+    free(n);
+    return NULL;
+  }
+
+  //Check for an int.
   int matches = sscanf(init, "%d", (int *)n->data);
   if (matches == 0) {
     free(n);
@@ -73,6 +87,17 @@ static bool equalsRealNode( Node const *a, Node const *b )
 Node *makeRealNode( char const *init )
 {
   Node *n = (Node *) malloc( sizeof( Node ) + sizeof( double ) );
+
+  //Check for anything after the double.
+  double trash;
+  char moreTrash[strlen(init) + 1];
+  int extraMatches = sscanf(init, "%lf %s", &trash, moreTrash);
+  if (extraMatches == 2) {
+    free(n);
+    return NULL;
+  }
+
+  //Check for doubles.
   int matches = sscanf(init, "%lf", (double *)n->data);
   if (matches == 0) {
     free(n);
@@ -101,9 +126,17 @@ Node *makeStringNode( char const *init )
   // Add code to actually parse the init string and create a
   // string value node if it's in the right format.
   Node *n = (Node *) malloc( sizeof( Node ) + strlen(init) + 1 );
+
+  if (*init != '\"') {
+    free(n);
+    return NULL;
+  }
+
+  //Check if it's the empty string.
   if (strcmp("\"\"", init) == 0) {
     strcpy(n->data, "");
   }
+  //Grab the string inside the quotation marks.
   else {
     int matches = sscanf(init + 1, "%[^\"]", n->data);
   if (matches == 0) {
