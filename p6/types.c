@@ -101,11 +101,16 @@ Node *makeStringNode( char const *init )
 {
   // Add code to actually parse the init string and create a
   // string value node if it's in the right format.
-  Node *n = (Node *) malloc( sizeof( Node ) + sizeof( init ) );
-  int matches = sscanf(init, "%s", n->data);
+  Node *n = (Node *) malloc( sizeof( Node ) + strlen(init) + 1 );
+  if (strcmp("\"\"", init) == 0) {
+    strcpy(n->data, "");
+  }
+  else {
+    int matches = sscanf(init + 1, "%[^\"]", n->data);
   if (matches == 0) {
     free(n);
     return NULL;
+  }
   }
 
   n->next = NULL;
