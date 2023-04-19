@@ -1,6 +1,6 @@
 /**
    @file types.h
-   @author
+   @author Jeremiah Knizley
    Header for types exposing functions for creating linked list nodes
    of various types.
 */

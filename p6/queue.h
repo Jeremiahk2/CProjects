@@ -1,6 +1,6 @@
 /** 
     @file queue.h
-    @author
+    @author Jeremiah Knizley
     Header file for queue, a generic implementation of a linked list.
 */
 
@@ -76,6 +76,7 @@ bool promote(Queue *q, Node const *example);
 
 /**
   Frees all the memory used to store the given queue, including the memory for each of the nodes.
+  @param q the queue to be freed of its memory
   */
 void freeQueue(Queue *q);
 

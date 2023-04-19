@@ -7,11 +7,21 @@
 #include "input.h"
 #include "queue.h"
 #include "types.h"
+/**
+  @file gq.c
+  @author Jeremiah Knizley
+  Main part of the gq program.
+  Takes in user input that is supposed to be used to maintain a queue.
+  The queue can contain the following three types: int, real, and string
+  usage: ./gq
+*/
 
+
+/** The index in the nodeMakers array that contains the makeIntNode function pointer */
 #define MAKEINTNODE 0
-
+/** The index in the nodeMakers array that contains the makeRealNode function pointer */
 #define MAKEREALNODE 1
-
+/** The index in the nodeMakers array that contains the makeStringNode function pointer */
 #define MAKESTRINGNODE 2
 
 /** List of all the node creation functions.  This is a chain of
@@ -22,7 +32,15 @@ static Node *(*nodeMakers[])( char const *init ) = {
   makeRealNode,
   makeStringNode
 };
-
+/**
+  Main part of the program. Responds to user input. Valid commands are:
+  enqueue <value> (add a value to the end of the queue)
+  dequeue (remove the value at the front of the queue and print it out)
+  promote <value> (move the value to the front of the queue)
+  length (get the length of the queue)
+  quit (quit the program)
+  @return exit status
+*/
 int main() 
 {
   Queue *queue = makeQueue();
@@ -124,4 +142,5 @@ int main()
       free(command);
     }
   }
+  return EXIT_SUCCESS;
 }

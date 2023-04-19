@@ -12,13 +12,21 @@
 #include <ctype.h>
 /** The upper bound on the number of matches for int and real parses. (Exclusive) */
 #define UPBNDMATCHES 2
-/** Function used as the print method for an integer node. */
+/**
+  Function used to print out the data in Integer nodes.
+  @param n the node containing the integer
+*/
 static void printIntNode( Node const *n )
 {
   printf( "%d", * (int *) ( n->data ) );
 }
 
-/** Function used as the comparison method for an integer nodes. */
+/**
+  Function used to compare Integer Nodes.
+  @param a the first node to compare (should be the main (known) integer node)
+  @param b the second node to compare. Can be any kind of node.
+  @return the equality of the two nodes. True if equal, false if not
+*/
 static bool equalsIntNode( Node const *a, Node const *b )
 {
   return b->print == printIntNode &&
@@ -72,13 +80,21 @@ Node *makeIntNode( char const *init )
   return n;
 }
 
-/** Function used as the print method for an real node. */
+/**
+  Function used to print out the data in real nodes. Prints out to 3 decimal places.
+  @param n the node containing the real number (double)
+*/
 static void printRealNode( Node const *n )
 {
   printf( "%.3lf", * (double *) ( n->data ) );
 }
 
-/** Function used as the comparison method for real nodes. */
+/**
+  Function used to compare Real Nodes.
+  @param a the first node to compare (should be the main (known) Real node)
+  @param b the second node to compare. Can be any kind of node.
+  @return the equality of the two nodes. True if equal, false if not
+*/
 static bool equalsRealNode( Node const *a, Node const *b )
 {
   return b->print == printRealNode &&
@@ -110,13 +126,21 @@ Node *makeRealNode( char const *init )
   return n;
 }
 
-/** Function used as the print method for an integer node. */
+/**
+  Function used to print out the data in string nodes
+  @param n the node containing the string
+*/
 static void printStringNode( Node const *n )
 {
   printf("%s", n->data);
 }
 
-/** Function used as the comparison method for string nodes. */
+/**
+  Function used to compare String Nodes.
+  @param a the first node to compare (should be the main (known) string node)
+  @param b the second node to compare. Can be any kind of node.
+  @return the equality of the two nodes. True if equal, false if not
+*/
 static bool equalsStringNode( Node const *a, Node const *b )
 {
   return b->print == printStringNode && (strcmp(a->data, b->data) == 0);
