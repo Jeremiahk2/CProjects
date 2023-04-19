@@ -1,6 +1,6 @@
 /**
    @file types.c
-   @author
+   @author Jeremiah Knizley
    Implementation of linked list nodes for int values, real values
    (doubles) and string values.
 */
@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-
+/** The upper bound on the number of matches for int and real parses. (Exclusive) */
+#define UPBNDMATCHES 2
 /** Function used as the print method for an integer node. */
 static void printIntNode( Node const *n )
 {
@@ -50,7 +51,7 @@ Node *makeIntNode( char const *init )
   int trash;
   char moreTrash[strlen(init) + 1];
   int extraMatches = sscanf(init, "%d %s", &trash, moreTrash);
-  if (extraMatches == 2) {
+  if (extraMatches == UPBNDMATCHES) {
     free(n);
     return NULL;
   }
@@ -92,7 +93,7 @@ Node *makeRealNode( char const *init )
   double trash;
   char moreTrash[strlen(init) + 1];
   int extraMatches = sscanf(init, "%lf %s", &trash, moreTrash);
-  if (extraMatches == 2) {
+  if (extraMatches == UPBNDMATCHES) {
     free(n);
     return NULL;
   }

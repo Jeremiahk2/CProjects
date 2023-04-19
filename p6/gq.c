@@ -8,6 +8,12 @@
 #include "queue.h"
 #include "types.h"
 
+#define MAKEINTNODE 0
+
+#define MAKEREALNODE 1
+
+#define MAKESTRINGNODE 2
+
 /** List of all the node creation functions.  This is a chain of
     responsibility; we can keep trying these functions until we find
     one that knows how to parse the init string. */
@@ -44,17 +50,17 @@ int main()
         numSpaces--;
 
         strcpy(second, command + pos + numSpaces);
-        Node *new = nodeMakers[0](second);
+        Node *new = nodeMakers[MAKEINTNODE](second);
         if (new != NULL) {
           enqueue(queue, new);
         }
         else {
-          new = nodeMakers[1](second);
+          new = nodeMakers[MAKEREALNODE](second);
           if (new != NULL) {
             enqueue(queue, new);
           }
           else {
-            new = nodeMakers[2](second);
+            new = nodeMakers[MAKESTRINGNODE](second);
             if (new != NULL) {
               enqueue(queue, new);
             }
@@ -83,12 +89,12 @@ int main()
         numSpaces--;
 
         strcpy(second, command + pos + numSpaces);
-        Node *new = nodeMakers[0](second);
+        Node *new = nodeMakers[MAKEINTNODE](second);
 
         if (new == NULL) {
-          new = nodeMakers[1](second);
+          new = nodeMakers[MAKEREALNODE](second);
           if (new == NULL) {
-            new = nodeMakers[2](second);
+            new = nodeMakers[MAKESTRINGNODE](second);
           }
         }
         bool promoted = promote(queue, new);
