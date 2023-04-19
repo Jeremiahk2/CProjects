@@ -32,7 +32,6 @@ int main()
     if (strcmp(first, "enqueue") == 0) {
       char second[strlen(command) + 1];
       strcpy(second, command + pos + 1);
-      // sscanf(command + pos, "%s", second);
       Node *new = makeIntNode(second);
       if (new != NULL) {
         enqueue(queue, new);
@@ -62,7 +61,7 @@ int main()
     }
     else if (strcmp(first, "promote") == 0) {
       char second[strlen(command) + 1];
-      sscanf(command + pos, "%s", second);
+      strcpy(second, command + pos + 1);
       Node *new = makeIntNode(second);
 
       if (new == NULL) {

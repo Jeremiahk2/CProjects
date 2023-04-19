@@ -41,7 +41,7 @@ bool promote(Queue *q, Node const *example)
   if (example->equals(example, q->head)) {
     return true;
   }
-  Node **link = &(q->head);
+  Node **link = &(q->head); //This is truncating our list.
   //Find the node before the one we want.
   while (*link && !(example->equals(example, (*link)->next))) {
     link = &(*link)->next;
@@ -55,6 +55,12 @@ bool promote(Queue *q, Node const *example)
   (*link)->next = found->next;     //Skip over the node (remove it from the list)
   found->next = q->head;           //Set the node's next value as head  
   q->head = found;                 //Set head as the node.
+
+  link = &(q->head);
+  while ((*link)->next) {
+    link = &(*link)->next;
+  }
+  q->tail = &((*link)->next);
   return true;
 }     
 

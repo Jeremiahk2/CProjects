@@ -90,11 +90,10 @@ static void printStringNode( Node const *n )
   printf("%s", n->data);
 }
 
-/** Function used as the comparison method for an integer nodes. */
+/** Function used as the comparison method for string nodes. */
 static bool equalsStringNode( Node const *a, Node const *b )
 {
-  return b->print == printRealNode &&
-    (strcmp(a->data, b->data) == 0);
+  return b->print == printStringNode && (strcmp(a->data, b->data) == 0);
 }
 
 Node *makeStringNode( char const *init )
