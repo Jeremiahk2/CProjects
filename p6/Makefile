@@ -18,4 +18,5 @@ clean:
 	rm -f queue.o
 	rm -f input.o
 	rm -f output.txt
-	
+	rm -f gq
+	rm -f stderr.txt
